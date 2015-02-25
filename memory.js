@@ -21,7 +21,7 @@ var Memory = {
 	wildcard: {
 		current: 0,
 
-		target: 20,
+		target: 30,
 
 		full: false
 	},
@@ -29,7 +29,7 @@ var Memory = {
 	showCards: {
 		current: 0,
 
-		target: 30,
+		target: 40,
 
 		full: false
 	},
@@ -37,7 +37,7 @@ var Memory = {
 	extraTime: {
 		current: 0,
 
-		target: 10,
+		target: 20,
 
 		full: false
 	},
@@ -45,7 +45,7 @@ var Memory = {
 	extraMoves: {
 		current: 0,
 
-		target: 10,
+		target: 20,
 
 		full: false
 	},
@@ -395,6 +395,23 @@ Memory.levels = [
 						levelMessage: 'Clear the board!',
 
 						targetMatches: 5
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						targetSeconds: 90, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 6
 					}
 				];
 
