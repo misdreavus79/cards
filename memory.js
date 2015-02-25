@@ -76,7 +76,7 @@ var Memory = {
 
 		for(var i = 1; i <= this.levels[this.currentLevel].numberOfTiles; i++){ 
 			this.currentElements[(i - 1)] = '<button class="tile" data="' + val + '"><img src="shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button>';
-			console.log(this.currentElements[i - 1]);
+			
 			if((i % 2) === 0){
 				val++; //pair data values with each button
 				if(colorCounter === 6){
@@ -117,12 +117,12 @@ var Memory = {
 			$('#time').html(this.levels[this.currentLevel].targetSeconds);
 			if(this.levels[this.currentLevel].targetSeconds > 0){
 				this.levels[this.currentLevel].targetSeconds -= 1; //change this so that it affects the current level
+				
 				setTimeout(function(){
 					this.countdown();
 				}.bind(this), 1000);
 			}else{
 				//if they run out of time, end the game
-				$('#message').text('Out of Time');
 				this.end('time');	
 			}
 		}
@@ -248,18 +248,7 @@ var Memory = {
 		//increas the number of matches and compare against target
 		this.currentMatches += 1;
 
-		//add to the power bar
-		this.clearLevel.current += 1;
-		this.wildcard.current += 1;
-		this.showCards.current += 1;
-		this.extraMoves.current += 1;
-		this.extraTime.current += 1;
-
-		$('#clearLevel').val(this.clearLevel.current);
-		$('#wildcard').val(this.wildcard.current);
-		$('#revealer').val(this.showCards.current);
-		$('#extraTime').val(this.extraTime.current);
-		$('#extraMoves').val(this.extraMoves.current);
+		this.fillBars();
 		if(this.currentMatches === this.levels[this.currentLevel].targetMatches){
 			this.win = true;
 			this.end(this.levels[this.currentLevel].type);
@@ -283,9 +272,9 @@ var Memory = {
 		}
 		if(this.currentLevel % 10 === 0){
 			this.updateBars();
-		}else{
-			console.log(this.currentLevel % 10);
 		}
+		$('#shuffle').prop('disabled', false);
+		$('#reset').prop('disabled', true).css('opacity', '.5');
 	},
 
 	//move to the next level or play again
@@ -312,10 +301,8 @@ var Memory = {
 			$('#message').html('Almost...');
 			$('#reset').val('Play Again');
 		}
-		
-		$('#reset').show().click(function(){
-			Memory.start();
-		}); //resets the game once it ends
+		$('#shuffle').prop('disabled', true);
+		$('#reset').prop('disabled', false).css('opacity', '1');
 	},
 
 	//powerup functions
@@ -344,6 +331,18 @@ var Memory = {
 		// 	return;
 		// }
 		// this.currentPower += 1;
+		//add to the power bar
+		this.clearLevel.current += 1;
+		this.wildcard.current += 1;
+		this.showCards.current += 1;
+		this.extraMoves.current += 1;
+		this.extraTime.current += 1;
+
+		$('#clearLevel').val(this.clearLevel.current);
+		$('#wildcard').val(this.wildcard.current);
+		$('#revealer').val(this.showCards.current);
+		$('#extraTime').val(this.extraTime.current);
+		$('#extraMoves').val(this.extraMoves.current);
 	},
 
 	useBars: function(){
@@ -362,6 +361,40 @@ var Memory = {
 };
 
 Memory.levels = [
+					{
+						type: 'normal', //for testing purposes only
+
+						targetSeconds: 90, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 4,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 2
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						targetSeconds: 90, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 6,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 3
+					},
 					{
 						type: 'normal', //for testing purposes only
 
@@ -412,6 +445,23 @@ Memory.levels = [
 						levelMessage: 'Clear the board!',
 
 						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 90, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board in 90 seconds!',
+
+						targetMatches: 6
 					}
 				];
 
@@ -419,6 +469,7 @@ Memory.levels = [
 //event handlers
 $(document).ready(function(){
 	$('#reset').hide();
+	$('#shuffle').hide();
 	var init = function(){
 		/*window.addEventListener('contextmenu', function(ev) {
 		    ev.preventDefault();
@@ -428,6 +479,13 @@ $(document).ready(function(){
 		$('#start').click(function(){
 			$(this).hide();
 			Memory.start();
+			$('#shuffle').show().click(function(e){
+			e.stopPropagation();
+			Memory.shuffle();
+			}).prop('disabled', false);
+			$('#reset').show().click(function(){
+				Memory.start();
+			}).prop('disabled', true).css('opacity', '.5');
 		});
 	};
 	$.ajax({
