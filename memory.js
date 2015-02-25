@@ -15,7 +15,11 @@ var Memory = {
 
 		target: 50,
 
-		full: false
+		full: false,
+
+		execute: function(){
+
+		}
 	},
 
 	wildcard: {
@@ -23,7 +27,11 @@ var Memory = {
 
 		target: 30,
 
-		full: false
+		full: false,
+
+		execute: function(){
+
+		}
 	},
 
 	showCards: {
@@ -31,7 +39,11 @@ var Memory = {
 
 		target: 40,
 
-		full: false
+		full: false,
+
+		execute: function(){
+
+		}
 	},
 
 	extraTime: {
@@ -39,7 +51,11 @@ var Memory = {
 
 		target: 20,
 
-		full: false
+		full: false,
+
+		execute: function(){
+
+		}
 	},
 
 	extraMoves: {
@@ -47,7 +63,11 @@ var Memory = {
 
 		target: 20,
 
-		full: false
+		full: false,
+
+		execute: function(){
+
+		}
 	},
 
 	win: false,
@@ -257,6 +277,7 @@ var Memory = {
 
 	//starts the game
 	start: function(){
+		console.log('starting...');
 		this.win = false;
 		this.score = 0;
 		this.currentMoves = 0;
@@ -264,6 +285,7 @@ var Memory = {
 		this.display();
 		$('#title').text("Level " + (this.currentLevel + 1));
 		$('#message').text(this.levels[this.currentLevel].levelMessage);
+		$('#score').text(this.score);
 		$('.tile').click(function(){
 			Memory.reveal($(this));
 		});
@@ -324,25 +346,37 @@ var Memory = {
 	},
 
 	fillBars: function(){
-		//if it's full, do nothing
-		// if(this.currentPower === this.targetPower){
-		// 	this.fullPower = true;
-		// 	//indicate that they can use the power bar visually
-		// 	return;
-		// }
-		// this.currentPower += 1;
-		//add to the power bar
-		this.clearLevel.current += 1;
-		this.wildcard.current += 1;
-		this.showCards.current += 1;
-		this.extraMoves.current += 1;
-		this.extraTime.current += 1;
-
-		$('#clearLevel').val(this.clearLevel.current);
-		$('#wildcard').val(this.wildcard.current);
-		$('#revealer').val(this.showCards.current);
-		$('#extraTime').val(this.extraTime.current);
-		$('#extraMoves').val(this.extraMoves.current);
+		if(this.clearLevel.current === this.clearLevel.target){
+			this.clearLevel.full = true;
+		}else{
+			this.clearLevel.current += 1;
+			$('#clearLevel').val(this.clearLevel.current);
+		}
+		if(this.wildcard.current === this.wildcard.target){
+			this.wildcard.full = true;
+		}else{
+			this.wildcard.current += 1;
+			$('#wildcard').val(this.wildcard.current);
+		}
+		if(this.showCards.current === this.showCards.target){
+			this.showCards.full = true;
+		}else{
+			this.showCards.current += 1;
+			$('#revealer').val(this.showCards.current);
+		}
+		if(this.extraMoves.current === this.extraMoves.target){
+			this.extraMoves.full = true;
+		}else{
+			this.extraMoves.current += 1;
+			$('#extraMoves').val(this.extraMoves.current);
+		}
+		if(this.extraTime.current === this.extraTime.target){
+			this.extraTime.full = true;
+		}else{
+			this.extraTime.current += 1;
+			$('#extraTime').val(this.extraTime.current);
+		}
+		
 	},
 
 	useBars: function(){
@@ -449,7 +483,7 @@ Memory.levels = [
 					{
 						type: 'time', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
+						targetSeconds: 60, //these will be assigned
 
 						targetScore: 50000, //in the database  
 
@@ -459,7 +493,24 @@ Memory.levels = [
 
 						targetTile: '', //type and color
 
-						levelMessage: 'Clear the board in 90 seconds!',
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board in 40 moves!',
 
 						targetMatches: 6
 					}
