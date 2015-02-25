@@ -64,24 +64,28 @@ var Memory = {
 
 	currentMoves: 0,
 
-	images: ['shapes/circle-blue.png', 'shapes/circle-red.png', 'shapes/circle-green.png', 'shapes/circle-pink.png', 'shapes/crown1-blue.png', 'shapes/crown1-red.png', 'shapes/crown1-green.png', 'shapes/crown1-pink.png', 'shapes/crown2-blue.png', 'shapes/crown2-red.png', 'shapes/crown2-green.png', 'shapes/crown2-pink.png', 
-						'shapes/crown3-blue.png', 'shapes/crown3-red.png', 'shapes/crown3-green.png', 'shapes/crown3-pink.png', 'shapes/club-blue.png', 'shapes/club-red.png', 'shapes/club-green.png', 'shapes/club-pink.png', 'shapes/diamond-blue.png', 'shapes/diamond-red.png', 'shapes/diamond-green.png', 'shapes/diamond-pink.png', 
-						'shapes/heart-blue.png', 'shapes/heart-red.png', 'shapes/heart-green.png', 'shapes/heart-pink.png', 'shapes/moon-blue.png', 'shapes/moon-red.png', 'shapes/moon-green.png', 'shapes/moon-pink.png', 'shapes/spade-blue.png', 'shapes/spade-red.png', 'shapes/spade-green.png', 'shapes/spade-pink.png', 
-						'shapes/star-blue.png', 'shapes/star-red.png', 'shapes/star-green.png', 'shapes/star-pink.png', 'shapes/triangle-blue.png', 'shapes/triangle-red.png', 'shapes/triangle-green.png', 'shapes/triangle-pink.png', 
-			],
+	colors: ['blue', 'red', 'pink', 'green', 'orange', 'black'],
+
+	shapes: ['circle', 'square', 'triangle', 'diamond', 'heart', 'crown1', 'star', 'crown2', 'moon', 'crown3', 'spade', 'club'],
 
 	//displays the current cardset
 	display: function(){
 
 		//variable that will pair elements with images
-		var val = 1;
+		var val = 1, colorCounter = 0, shapeCounter = 0;
 
 		for(var i = 1; i <= this.levels[this.currentLevel].numberOfTiles; i++){ 
-			this.currentElements[(i - 1)] = '<button class="tile" data="' + val + '"><img src="' + this.images[(val - 1)] + '"></button>';
-
+			this.currentElements[(i - 1)] = '<button class="tile" data="' + val + '"><img src="shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button>';
+			console.log(this.currentElements[i - 1]);
 			if((i % 2) === 0){
 				val++; //pair data values with each button
+				if(colorCounter === 6){
+					shapeCounter++;
+					colorCounter = 0;
+				}
+				colorCounter++;
 			}
+			
 		}
 		this.currentElements.sort(function(){
 			return Math.random() - 0.5;
