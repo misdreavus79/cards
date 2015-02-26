@@ -145,4 +145,9 @@ h2{
 #reset, #shuffle{
 	font-size: 16px;
 }
-
+.powerups label{
+	display: block;
+}
+.powerups progress{
+	margin-bottom: 1.5em;
+}

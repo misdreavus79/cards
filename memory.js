@@ -18,7 +18,18 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-
+			if(this.full){
+				$('.tile').each(function(){
+					if(!$(this).hasClass('active')){
+						$(this).addClass('active');
+					}
+				});
+				this.full = false;
+				Memory.win = true;
+				Memory.end(Memory.levels[Memory.currentLevel].type);
+			}else{
+				return;
+			}
 		}
 	},
 
@@ -30,7 +41,12 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-
+			if(this.full){
+				console.log('can be used');
+				this.full = false;
+			}else{
+				return;
+			}
 		}
 	},
 
@@ -42,7 +58,24 @@ var Memory = {
 		full: false,
 
 		execute: function(){
+			if(this.full){
+				$('.tile').each(function(){
+					if(!$(this).hasClass('active')){
+						$(this).addClass('active');
+					}
+				});
+				setTimeout(function(){
+					$('.tile').each(function(){
+						if(!$(this).hasClass('locked')){
+							$(this).removeClass('active');
+						}
+					});
+				}, 2000);
 
+				this.full = false;
+			}else{
+				return;
+			}
 		}
 	},
 
@@ -54,7 +87,13 @@ var Memory = {
 		full: false,
 
 		execute: function(){
+			if(this.full && Memory.levels[Memory.currentLevel] === 'time'){
+				Memory.levels[Memory.currentLevel].targetSeconds += 20;
 
+				this.full = false;
+			}else{
+				return;
+			}
 		}
 	},
 
@@ -66,7 +105,14 @@ var Memory = {
 		full: false,
 
 		execute: function(){
+			if(this.full && Memory.levels[Memory.currentLevel] === 'moves'){
+				var extras = Memory.levels[Memory.currentLevel].targetMoves += 10;
+				$('#moves').text(extras);	
 
+				this.full = false;
+			}else{
+				return;
+			}
 		}
 	},
 
@@ -277,7 +323,7 @@ var Memory = {
 
 	//starts the game
 	start: function(){
-		console.log('starting...');
+		
 		this.win = false;
 		this.score = 0;
 		this.currentMoves = 0;
@@ -289,12 +335,25 @@ var Memory = {
 		$('.tile').click(function(){
 			Memory.reveal($(this));
 		});
-		if(this.levels[this.currentLevel].type === 'time'){
-			this.countdown();
-		}
+
+		//update powerup bars
 		if(this.currentLevel % 10 === 0){
 			this.updateBars();
 		}
+
+		switch(this.levels[this.currentLevel].type){
+			case 'time':
+				this.countdown();
+				break;
+
+			case 'moves':
+				$('#moves').text(this.levels[this.currentLevel].targetMoves);
+				break;
+
+			default:
+				break;
+		}
+		
 		$('#shuffle').prop('disabled', false);
 		$('#reset').prop('disabled', true).css('opacity', '.5');
 	},
@@ -379,17 +438,8 @@ var Memory = {
 		
 	},
 
-	useBars: function(){
-		// if(this.fullPower){
-		// 	//clear the board
-
-		// 	//reset powerbar
-		// 	this.currentPower = 0;
-		// 	$('#powerbar').val(this.currentPower);
-
-		// }else{
-		// 	return;
-		// }
+	useBars: function(type){
+		this[type].execute();
 	}
 
 };
@@ -537,6 +587,9 @@ $(document).ready(function(){
 			$('#reset').show().click(function(){
 				Memory.start();
 			}).prop('disabled', true).css('opacity', '.5');
+		});
+		$('label[for="clearLevel"], label[for="wildcard"], label[for="revealer"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
+			Memory.useBars($(this).attr('for'));
 		});
 	};
 	$.ajax({
