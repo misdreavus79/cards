@@ -10,6 +10,7 @@ var Memory = {
 
 	currentElements: [],
 
+	//powerup definitions (think of maybe instantiating this)
 	clearLevel: {
 		current: 0,
 
@@ -25,6 +26,8 @@ var Memory = {
 					}
 				});
 				this.full = false;
+				this.current = 0;
+				$('#clearLevel').val(this.current);
 				Memory.win = true;
 				Memory.end(Memory.levels[Memory.currentLevel].type);
 			}else{
@@ -42,15 +45,22 @@ var Memory = {
 
 		execute: function(){
 			if(this.full){
-				console.log('can be used');
+				if(!Memory.slot){
+					alert('select a card first');
+					return;
+				}
+				var el = $('button[data="' + Memory.slot + '"]').not('.active');
+				Memory.reveal(el);
 				this.full = false;
+				this.current = 0;
+				$('#wildcard').val(this.current);
 			}else{
 				return;
 			}
 		}
 	},
 
-	showCards: {
+	showBoard: {
 		current: 0,
 
 		target: 40,
@@ -73,6 +83,8 @@ var Memory = {
 				}, 2000);
 
 				this.full = false;
+				this.current = 0;
+				$('#showBoard').val(this.current);
 			}else{
 				return;
 			}
@@ -91,6 +103,8 @@ var Memory = {
 				Memory.levels[Memory.currentLevel].targetSeconds += 20;
 
 				this.full = false;
+				this.current = 0;
+				$('#extraTime').val(this.current);
 			}else{
 				return;
 			}
@@ -110,6 +124,8 @@ var Memory = {
 				$('#moves').text(extras);	
 
 				this.full = false;
+				this.current = 0;
+				$('#extraMoves').val(this.current);
 			}else{
 				return;
 			}
@@ -390,7 +406,7 @@ var Memory = {
 	updateBars: function(){
 		//update targets
 		this.clearLevel.target += 10;
-		this.showCards.target += 7;
+		this.showBoard.target += 7;
 		this.wildcard.target += 5;
 		this.extraTime.target += 3;
 		this.extraMoves.target += 3;
@@ -398,7 +414,7 @@ var Memory = {
 		//update status bars
 		$('#clearLevel').attr('max', this.clearLevel.target);
 		$('#wildcard').attr('max', this.wildcard.target);
-		$('#revealer').attr('max', this.showCards.target);
+		$('#revealer').attr('max', this.showBoard.target);
 		$('#extraTime').attr('max', this.extraTime.target);
 		$('#extraMoves').attr('max', this.extraMoves.target);
 		
@@ -417,11 +433,11 @@ var Memory = {
 			this.wildcard.current += 1;
 			$('#wildcard').val(this.wildcard.current);
 		}
-		if(this.showCards.current === this.showCards.target){
-			this.showCards.full = true;
+		if(this.showBoard.current === this.showBoard.target){
+			this.showBoard.full = true;
 		}else{
-			this.showCards.current += 1;
-			$('#revealer').val(this.showCards.current);
+			this.showBoard.current += 1;
+			$('#revealer').val(this.showBoard.current);
 		}
 		if(this.extraMoves.current === this.extraMoves.target){
 			this.extraMoves.full = true;
