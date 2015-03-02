@@ -10,7 +10,7 @@ var Memory = {
 
 	currentElements: [],
 
-	//powerup definitions (think of maybe instantiating this)
+	//powerup definitions 
 	clearLevel: {
 		current: 0,
 
@@ -144,7 +144,9 @@ var Memory = {
 
 	respawnCounter: 0,
 
-	currentMoves: 0,
+	currentMoves: 0, 
+
+	currentSeconds: 0, //for timed levels
 
 	colors: ['blue', 'red', 'pink', 'green', 'orange', 'black'],
 
@@ -196,9 +198,9 @@ var Memory = {
 	//for timed levels, displays how much time is left
 	countdown:  function(){
 		if(!this.win){
-			$('#time').html(this.levels[this.currentLevel].targetSeconds);
-			if(this.levels[this.currentLevel].targetSeconds > 0){
-				this.levels[this.currentLevel].targetSeconds -= 1; //change this so that it affects the current level
+			$('#time').html(this.currentSeconds);
+			if(this.currentSeconds > 0){
+				this.currentSeconds -= 1; //change this so that it affects the current level
 				
 				setTimeout(function(){
 					this.countdown();
@@ -220,7 +222,7 @@ var Memory = {
 
 	//for scored levels, tracks the score and matches it against the target score
 	trackScore: function(){
-		if(this.score === this.levels[this.currentLevel].targetScore){
+		if(this.score >= this.levels[this.currentLevel].targetScore){
 			this.win = true;
 			this.end('score');
 		}
@@ -359,6 +361,7 @@ var Memory = {
 
 		switch(this.levels[this.currentLevel].type){
 			case 'time':
+				this.currentSeconds = this.levels[this.currentLevel].targetSeconds;
 				this.countdown();
 				break;
 
@@ -396,7 +399,7 @@ var Memory = {
 			this.currentLevel += 1; 
 		}else{
 			$('#message').html('Almost...');
-			$('#reset').val('Play Again');
+			$('#reset').text('Play Again');
 		}
 		$('#shuffle').prop('disabled', true);
 		$('#reset').prop('disabled', false).css('opacity', '1');
@@ -414,7 +417,7 @@ var Memory = {
 		//update status bars
 		$('#clearLevel').attr('max', this.clearLevel.target);
 		$('#wildcard').attr('max', this.wildcard.target);
-		$('#revealer').attr('max', this.showBoard.target);
+		$('#showBoard').attr('max', this.showBoard.target);
 		$('#extraTime').attr('max', this.extraTime.target);
 		$('#extraMoves').attr('max', this.extraMoves.target);
 		
@@ -437,7 +440,7 @@ var Memory = {
 			this.showBoard.full = true;
 		}else{
 			this.showBoard.current += 1;
-			$('#revealer').val(this.showBoard.current);
+			$('#showBoard').val(this.showBoard.current);
 		}
 		if(this.extraMoves.current === this.extraMoves.target){
 			this.extraMoves.full = true;
@@ -579,6 +582,23 @@ Memory.levels = [
 						levelMessage: 'Clear the board in 40 moves!',
 
 						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						targetScore: 50000, //in the database  
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 14,
+
+						targetTile: '', //type and color
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 7
 					}
 				];
 
