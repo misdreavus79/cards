@@ -127,6 +127,7 @@ var Memory = {
 				this.current = 0;
 				$('#extraMoves').val(this.current);
 			}else{
+				console.log("not full");
 				return;
 			}
 		}
@@ -154,28 +155,44 @@ var Memory = {
 
 	//displays the current cardset
 	display: function(){
+		$('#board').html(''); //clear the board
 
 		//variable that will pair elements with images
 		var val = 1, colorCounter = 0, shapeCounter = 0;
 
 		for(var i = 1; i <= this.levels[this.currentLevel].numberOfTiles; i++){ 
-			this.currentElements[(i - 1)] = '<button class="tile" data="' + val + '"><img src="shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button>';
+			this.currentElements[(i - 1)] = '<td><button class="tile" data="' + val + '"><img src="shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button></td>';
 			
 			if((i % 2) === 0){
 				val++; //pair data values with each button
-				if(colorCounter === 6){
+				if(colorCounter === 5){
 					shapeCounter++;
 					colorCounter = 0;
 				}
 				colorCounter++;
+			}	
+
+			//if this is the last iteration, sort and organize
+			if(i === this.levels[this.currentLevel].numberOfTiles){
+				this.currentElements.sort(function(){
+					return Math.random() - 0.5;
+				});
+				var newContainer = '<tr>';
+				for(var j = 1; j <= this.currentElements.length; j++){ //second loop, since I'm randomizing the elements first
+					newContainer += this.currentElements[j - 1];
+					if((j % 4) === 0){
+						if(j < this.currentElements.length){
+							newContainer += '</tr><tr>';
+						}else{
+							newContainer += '</tr>';
+						}
+					}
+					
+				}
 			}
-			
 		}
-		this.currentElements.sort(function(){
-			return Math.random() - 0.5;
-		});
 		
-		$('#board').html(this.currentElements); //once randomized, put the tiles in the board 
+		$('#board').html(newContainer); //once randomized, put the tiles in the board 
 
 		this.respawnCounter = val;
 	},
@@ -467,15 +484,7 @@ Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 4,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board!',
 
@@ -484,15 +493,7 @@ Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 6,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board!',
 
@@ -501,15 +502,7 @@ Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 8,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board!',
 
@@ -518,15 +511,7 @@ Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 10,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board!',
 
@@ -535,15 +520,7 @@ Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
-						targetSeconds: 90, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 12,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board!',
 
@@ -554,13 +531,7 @@ Memory.levels = [
 
 						targetSeconds: 60, //these will be assigned
 
-						targetScore: 50000, //in the database  
-
-						targetMoves: 40, //and populated at runtime
-
 						numberOfTiles: 12,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board in 60 seconds!',
 
@@ -569,15 +540,9 @@ Memory.levels = [
 					{
 						type: 'moves', //for testing purposes only
 
-						targetSeconds: 60, //these will be assigned
-
-						targetScore: 50000, //in the database  
-
 						targetMoves: 40, //and populated at runtime
 
 						numberOfTiles: 12,
-
-						targetTile: '', //type and color
 
 						levelMessage: 'Clear the board in 40 moves!',
 
@@ -588,17 +553,33 @@ Memory.levels = [
 
 						targetSeconds: 60, //these will be assigned
 
-						targetScore: 50000, //in the database  
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
 
 						targetMoves: 40, //and populated at runtime
 
 						numberOfTiles: 14,
 
-						targetTile: '', //type and color
-
-						levelMessage: 'Clear the board in 60 seconds!',
+						levelMessage: 'Clear the board in 40 moves!',
 
 						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
 					}
 				];
 
@@ -624,7 +605,7 @@ $(document).ready(function(){
 				Memory.start();
 			}).prop('disabled', true).css('opacity', '.5');
 		});
-		$('label[for="clearLevel"], label[for="wildcard"], label[for="revealer"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
+		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
 			Memory.useBars($(this).attr('for'));
 		});
 	};
@@ -632,9 +613,9 @@ $(document).ready(function(){
 		url: 'http://misd.info/assets/data.php',
 		success: function(e){
 			//remember to set the levels when creating these (and maybe keep the cards themselves on the server?)
-			for(var i = 0; i < e.length; i++){
-				Memory.levels[i] = e[i];
-			}
+			// for(var i = 0; i < e.length; i++){
+			// 	Memory.levels[i] = e[i];
+			// }
 			init();
 		},
 		error: function(){
