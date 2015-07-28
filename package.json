@@ -1,0 +1,19 @@
+{
+  "name": "cards",
+  "version": "1.0.0",
+  "description": "Classic Memory Game",
+  "main": "memory.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misdreavus79/cards.git"
+  },
+  "author": "Eli Moreta-Feliz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misdreavus79/cards/issues"
+  },
+  "homepage": "https://github.com/misdreavus79/cards#readme"
+}
