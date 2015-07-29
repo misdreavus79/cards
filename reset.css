@@ -111,3 +111,9 @@ button, input, select, textarea {margin: 0;}
 /* make buttons play nice in IE */
 button {width: auto; overflow: visible;}
 
+.group:after{
+	content: '';
+	display: table;
+	clear: both;
+}
+

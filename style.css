@@ -153,3 +153,10 @@ h2{
 td{
 	min-width: 100px;
 }
+
+/*media queries*/
+@media screen and (max-width: 1080px){
+	h1{
+		font-size: 400%;
+	}
+}

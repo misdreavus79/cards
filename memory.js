@@ -480,7 +480,43 @@ var Memory = {
 
 };
 
-Memory.levels = [
+
+//event handlers
+$(document).ready(function(){
+	$('#reset').hide();
+	$('#shuffle').hide();
+	var init = function(){
+		/*window.addEventListener('contextmenu', function(ev) {
+		    ev.preventDefault();
+		    //alert('success!');
+		    return false;
+		}, false);*/
+		$('#start').click(function(){
+			$(this).hide();
+			Memory.start();
+			$('#shuffle').show().click(function(e){
+			e.stopPropagation();
+			Memory.shuffle();
+			}).prop('disabled', false);
+			$('#reset').show().click(function(){
+				Memory.start();
+			}).prop('disabled', true).css('opacity', '.5');
+		});
+		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
+			Memory.useBars($(this).attr('for'));
+		});
+	};
+	$.ajax({
+		url: 'http://misd.info/assets/data.php',
+		success: function(e){
+			//remember to set the levels when creating these (and maybe keep the cards themselves on the server?)
+			// for(var i = 0; i < e.length; i++){
+			// 	Memory.levels[i] = e[i];
+			// }
+			init();
+		},
+		error: function(){
+			Memory.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
@@ -581,44 +617,7 @@ Memory.levels = [
 
 						targetMatches: 8
 					}
-				];
-
-
-//event handlers
-$(document).ready(function(){
-	$('#reset').hide();
-	$('#shuffle').hide();
-	var init = function(){
-		/*window.addEventListener('contextmenu', function(ev) {
-		    ev.preventDefault();
-		    //alert('success!');
-		    return false;
-		}, false);*/
-		$('#start').click(function(){
-			$(this).hide();
-			Memory.start();
-			$('#shuffle').show().click(function(e){
-			e.stopPropagation();
-			Memory.shuffle();
-			}).prop('disabled', false);
-			$('#reset').show().click(function(){
-				Memory.start();
-			}).prop('disabled', true).css('opacity', '.5');
-		});
-		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
-			Memory.useBars($(this).attr('for'));
-		});
-	};
-	$.ajax({
-		url: 'http://misd.info/assets/data.php',
-		success: function(e){
-			//remember to set the levels when creating these (and maybe keep the cards themselves on the server?)
-			// for(var i = 0; i < e.length; i++){
-			// 	Memory.levels[i] = e[i];
-			// }
-			init();
-		},
-		error: function(){
+			];
 			init();
 		},
 		dataType: 'json'
