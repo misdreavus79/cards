@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		cssmin: {
 			compress: {
 				options: {
-					banner: '<% /*! <%= pkg.name %>' + ' <%= grunt.template.today("yyyy-mm-dd") %>*/ %>'
+					banner: '/*! <%= pkg.name %>' + ' <%= grunt.template.today("yyyy-mm-dd") %>*/'
 				},
 				files: {
 					'style.min.css': ['reset.css', 'style.css']
