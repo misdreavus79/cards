@@ -32,11 +32,22 @@ module.exports = function(grunt) {
 				}
 			}
 		}
+		imagemin: {
+			dist: {
+				options: {
+					optimizationLevel: 3
+				},
+				files: {
+					//'destination': 'source'
+				}
+			}
+		}
 	}); 
 
 	//load tasks
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.registerTask('default', ['uglify', 'cssmin']);
 };
