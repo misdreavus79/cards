@@ -99,7 +99,7 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-			if(this.full && Memory.levels[Memory.currentLevel] === 'time'){
+			if(this.full && Memory.levels[Memory.currentLevel].type === 'time'){
 				Memory.levels[Memory.currentLevel].targetSeconds += 20;
 
 				this.full = false;
@@ -119,8 +119,8 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-			console.log(this.full, this.current, this.target, Memory.levels[Memory.currentLevel]);
-			if(this.full && Memory.levels[Memory.currentLevel] === 'moves'){
+			console.log(this.full, this.current, this.target, Memory.levels[Memory.currentLevel].type);
+			if(this.full && Memory.levels[Memory.currentLevel].type === 'moves'){
 				var extras = Memory.levels[Memory.currentLevel].targetMoves += 10;
 				$('#moves').text(extras);	
 
@@ -250,6 +250,8 @@ var Memory = {
 	reveal: function(el){
 		//increase the number of moves
 		this.currentMoves += 1;
+
+		//depending on what type of level it is, run the appropriate function
 		switch(this.levels[this.currentLevel].type){
 			case 'time':
 				break;
@@ -272,9 +274,12 @@ var Memory = {
 		el.addClass('active');
 
 		//if the 'slot' variable is empty, assign this node's data value to it. Otherwise, call the match function
+		console.log("slot: ", this.slot);
 		if(!this.slot){
 			this.slot = el.attr('data');
+			console.log("False. Assigning ", this.slot, "to slot");
 		}else{
+			console.log("True. Running this.match");
 			this.match(el.attr('data'));
 		}
 	},
@@ -282,7 +287,7 @@ var Memory = {
 	//matches what the user inputs
 	match: function(val){
 
-		//see if the store value and the currently revealed value are equal. If so, leave as is. If not, hide both tiles again.
+		//see if the stored value and the currently revealed value are equal. If so, leave as is. If not, hide both tiles again.
 		if(this.slot === val){
 			//check to see if the match text is on the screen, add it if it isn't
 			if($('#message').text() === "Match!"){
@@ -292,8 +297,10 @@ var Memory = {
 			}
 			
 			//lock the matches
+			$('.active').addClass('locked').removeClass('active'); 
+
+			//remove the accent (if necessary)
 			setTimeout(function(){
-				$('.active').addClass('locked').removeClass('active'); 
 				if($('#message').hasClass('accent')){
 					$('#message').removeClass('accent');
 				}
@@ -373,7 +380,7 @@ var Memory = {
 		});
 
 		//update powerup bars
-		if(this.currentLevel % 10 === 0){
+		if(this.currentLevel % 10 === 0 && this.currentLevel > 1){
 			this.updateBars();
 		}
 
@@ -619,93 +626,15 @@ $(document).ready(function(){
 						targetMatches: 8
 					},
 					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 4,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 2
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 6,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 3
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 8,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 4
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 10,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 5
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 6
-					},
-					{
-						type: 'time', //for testing purposes only
-
-						targetSeconds: 60, //these will be assigned
-
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 6
-					},
-					{
 						type: 'moves', //for testing purposes only
 
 						targetMoves: 40, //and populated at runtime
 
-						numberOfTiles: 12,
+						numberOfTiles: 16,
 
 						levelMessage: 'Clear the board in 40 moves!',
 
-						targetMatches: 6
-					},
-					{
-						type: 'time', //for testing purposes only
-
-						targetSeconds: 60, //these will be assigned
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 7
-					},
-					{
-						type: 'moves', //for testing purposes only
-
-						targetMoves: 40, //and populated at runtime
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 40 moves!',
-
-						targetMatches: 7
+						targetMatches: 8
 					},
 					{
 						type: 'moves', //for testing purposes only
@@ -719,93 +648,15 @@ $(document).ready(function(){
 						targetMatches: 8
 					},
 					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 4,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 2
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 6,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 3
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 8,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 4
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 10,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 5
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 6
-					},
-					{
-						type: 'time', //for testing purposes only
-
-						targetSeconds: 60, //these will be assigned
-
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 6
-					},
-					{
 						type: 'moves', //for testing purposes only
 
 						targetMoves: 40, //and populated at runtime
 
-						numberOfTiles: 12,
+						numberOfTiles: 16,
 
 						levelMessage: 'Clear the board in 40 moves!',
 
-						targetMatches: 6
-					},
-					{
-						type: 'time', //for testing purposes only
-
-						targetSeconds: 60, //these will be assigned
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 7
-					},
-					{
-						type: 'moves', //for testing purposes only
-
-						targetMoves: 40, //and populated at runtime
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 40 moves!',
-
-						targetMatches: 7
+						targetMatches: 8
 					},
 					{
 						type: 'moves', //for testing purposes only
@@ -819,93 +670,15 @@ $(document).ready(function(){
 						targetMatches: 8
 					},
 					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 4,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 2
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 6,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 3
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 8,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 4
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 10,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 5
-					},
-					{
-						type: 'normal', //for testing purposes only
-
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board!',
-
-						targetMatches: 6
-					},
-					{
 						type: 'time', //for testing purposes only
 
-						targetSeconds: 60, //these will be assigned
+						targetSeconds: 55, //and populated at runtime
 
-						numberOfTiles: 12,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 6
-					},
-					{
-						type: 'moves', //for testing purposes only
-
-						targetMoves: 40, //and populated at runtime
-
-						numberOfTiles: 12,
+						numberOfTiles: 16,
 
 						levelMessage: 'Clear the board in 40 moves!',
 
-						targetMatches: 6
-					},
-					{
-						type: 'time', //for testing purposes only
-
-						targetSeconds: 60, //these will be assigned
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 60 seconds!',
-
-						targetMatches: 7
-					},
-					{
-						type: 'moves', //for testing purposes only
-
-						targetMoves: 40, //and populated at runtime
-
-						numberOfTiles: 14,
-
-						levelMessage: 'Clear the board in 40 moves!',
-
-						targetMatches: 7
+						targetMatches: 8
 					},
 					{
 						type: 'moves', //for testing purposes only
@@ -917,7 +690,52 @@ $(document).ready(function(){
 						levelMessage: 'Clear the board in 40 moves!',
 
 						targetMatches: 8
-					}
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 50, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 36, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+
 			];
 			init();
 		},
