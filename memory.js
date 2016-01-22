@@ -119,6 +119,7 @@ var Memory = {
 		full: false,
 
 		execute: function(){
+			console.log(this.full, this.current, this.target, Memory.levels[Memory.currentLevel]);
 			if(this.full && Memory.levels[Memory.currentLevel] === 'moves'){
 				var extras = Memory.levels[Memory.currentLevel].targetMoves += 10;
 				$('#moves').text(extras);	
@@ -204,7 +205,7 @@ var Memory = {
 		$('#board').fadeOut(500, function(){
 			$('#board').html(this.currentElements); //once randomized, put the tiles in the board
 			
-			$('.tile').click(function(){
+			$('.tile').on("click", function(){
 				Memory.reveal($(this)); //ensure they can still be clicked
 			});
 		});
@@ -367,7 +368,7 @@ var Memory = {
 		$('#title').text("Level " + (this.currentLevel + 1));
 		$('#message').text(this.levels[this.currentLevel].levelMessage);
 		$('#score').text(this.score);
-		$('.tile').click(function(){
+		$('.tile').on("click", function(){
 			Memory.reveal($(this));
 		});
 
@@ -491,18 +492,18 @@ $(document).ready(function(){
 		    //alert('success!');
 		    return false;
 		}, false);*/
-		$('#start').click(function(){
+		$('#start').on("click", function(){
 			$(this).hide();
 			Memory.start();
-			$('#shuffle').show().click(function(e){
+			$('#shuffle').show().on("click", function(e){
 			e.stopPropagation();
 			Memory.shuffle();
 			}).prop('disabled', false);
-			$('#reset').show().click(function(){
+			$('#reset').show().on("click", function(){
 				Memory.start();
 			}).prop('disabled', true).css('opacity', '.5');
 		});
-		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').click(function(){
+		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').on("click", function(){
 			Memory.useBars($(this).attr('for'));
 		});
 	};
@@ -517,6 +518,306 @@ $(document).ready(function(){
 		},
 		error: function(){
 			Memory.levels = [
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 4,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 2
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 6,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 3
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 8,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 4
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 10,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 5
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 4,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 2
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 6,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 3
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 8,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 4
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 10,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 5
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 4,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 2
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 6,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 3
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 8,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 4
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 10,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 5
+					},
+					{
+						type: 'normal', //for testing purposes only
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 12,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 6
+					},
+					{
+						type: 'time', //for testing purposes only
+
+						targetSeconds: 60, //these will be assigned
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 60 seconds!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 14,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 7
+					},
+					{
+						type: 'moves', //for testing purposes only
+
+						targetMoves: 40, //and populated at runtime
+
+						numberOfTiles: 16,
+
+						levelMessage: 'Clear the board in 40 moves!',
+
+						targetMatches: 8
+					},
 					{
 						type: 'normal', //for testing purposes only
 
