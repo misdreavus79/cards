@@ -31,6 +31,7 @@ var Memory = {
 				Memory.win = true;
 				Memory.end(Memory.levels[Memory.currentLevel].type);
 			}else{
+				$('#statusbar').text("Clear Level is not full yet!");
 				return;
 			}
 		}
@@ -55,6 +56,7 @@ var Memory = {
 				this.current = 0;
 				$('#wildcard').val(this.current);
 			}else{
+				$('#statusbar').text("Wildcard is not full yet!");
 				return;
 			}
 		}
@@ -86,6 +88,7 @@ var Memory = {
 				this.current = 0;
 				$('#showBoard').val(this.current);
 			}else{
+				$('#statusbar').text("Show Board is not full yet!");
 				return;
 			}
 		}
@@ -106,6 +109,7 @@ var Memory = {
 				this.current = 0;
 				$('#extraTime').val(this.current);
 			}else{
+				$('#statusbar').text("Extra Time is not full yet!");
 				return;
 			}
 		}
@@ -119,7 +123,6 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-			console.log(this.full, this.current, this.target, Memory.levels[Memory.currentLevel].type);
 			if(this.full && Memory.levels[Memory.currentLevel].type === 'moves'){
 				var extras = Memory.levels[Memory.currentLevel].targetMoves += 10;
 				$('#moves').text(extras);	
@@ -128,7 +131,7 @@ var Memory = {
 				this.current = 0;
 				$('#extraMoves').val(this.current);
 			}else{
-				console.log("not full");
+				$('#statusbar').text("Extra Moves is not full yet!");
 				return;
 			}
 		}
@@ -274,12 +277,9 @@ var Memory = {
 		el.addClass('active');
 
 		//if the 'slot' variable is empty, assign this node's data value to it. Otherwise, call the match function
-		console.log("slot: ", this.slot);
 		if(!this.slot){
 			this.slot = el.attr('data');
-			console.log("False. Assigning ", this.slot, "to slot");
 		}else{
-			console.log("True. Running this.match");
 			this.match(el.attr('data'));
 		}
 	},
@@ -340,11 +340,9 @@ var Memory = {
 		setTimeout(function(){
 			var yey = $('.locked').first();
 			if(yey.length <= 0){
-				console.log('nothing');
 				this.shuffle();
 				return;
 			}
-			console.log(yey);
 			yey.remove();
 			this.respawn();
 		}.bind(this), 300);
