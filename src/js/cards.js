@@ -1,10 +1,10 @@
-//Memory, by Eli Moreta-Feliz
+//Cards, by Eli Moreta-Feliz
 
 "use strict";
 
 
 //create a game object
-var Memory = {
+var Cards = {
 
 	currentLevel: 0,
 
@@ -28,10 +28,10 @@ var Memory = {
 				this.full = false;
 				this.current = 0;
 				$('#clearLevel').val(this.current);
-				Memory.win = true;
-				Memory.end(Memory.levels[Memory.currentLevel].type);
+				Cards.win = true;
+				Cards.end(Cards.levels[Cards.currentLevel].type);
 			}else{
-				$('#statusbar').text("Clear Level is not full yet!");
+				$('#message').text("Clear Level is not full yet!");
 				return;
 			}
 		}
@@ -46,17 +46,17 @@ var Memory = {
 
 		execute: function(){
 			if(this.full){
-				if(!Memory.slot){
+				if(!Cards.slot){
 					alert('select a card first');
 					return;
 				}
-				var el = $('button[data="' + Memory.slot + '"]').not('.active');
-				Memory.reveal(el);
+				var el = $('button[data="' + Cards.slot + '"]').not('.active');
+				Cards.reveal(el);
 				this.full = false;
 				this.current = 0;
 				$('#wildcard').val(this.current);
 			}else{
-				$('#statusbar').text("Wildcard is not full yet!");
+				$('#message').text("Wildcard is not full yet!");
 				return;
 			}
 		}
@@ -88,7 +88,7 @@ var Memory = {
 				this.current = 0;
 				$('#showBoard').val(this.current);
 			}else{
-				$('#statusbar').text("Show Board is not full yet!");
+				$('#message').text("Show Board is not full yet!");
 				return;
 			}
 		}
@@ -102,14 +102,14 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-			if(this.full && Memory.levels[Memory.currentLevel].type === 'time'){
-				Memory.levels[Memory.currentLevel].targetSeconds += 20;
+			if(this.full && Cards.levels[Cards.currentLevel].type === 'time'){
+				Cards.levels[Cards.currentLevel].targetSeconds += 20;
 
 				this.full = false;
 				this.current = 0;
 				$('#extraTime').val(this.current);
 			}else{
-				$('#statusbar').text("Extra Time is not full yet!");
+				$('#message').text("Extra Time is not full yet!");
 				return;
 			}
 		}
@@ -123,15 +123,15 @@ var Memory = {
 		full: false,
 
 		execute: function(){
-			if(this.full && Memory.levels[Memory.currentLevel].type === 'moves'){
-				var extras = Memory.levels[Memory.currentLevel].targetMoves += 10;
+			if(this.full && Cards.levels[Cards.currentLevel].type === 'moves'){
+				var extras = Cards.levels[Cards.currentLevel].targetMoves += 10;
 				$('#moves').text(extras);	
 
 				this.full = false;
 				this.current = 0;
 				$('#extraMoves').val(this.current);
 			}else{
-				$('#statusbar').text("Extra Moves is not full yet!");
+				$('#message').text("Extra Moves is not full yet!");
 				return;
 			}
 		}
@@ -209,7 +209,7 @@ var Memory = {
 			$('#board').html(this.currentElements); //once randomized, put the tiles in the board
 			
 			$('.tile').on("click", function(){
-				Memory.reveal($(this)); //ensure they can still be clicked
+				Cards.reveal($(this)); //ensure they can still be clicked
 			});
 		});
 		$('#board').fadeIn(500);
@@ -374,7 +374,7 @@ var Memory = {
 		$('#message').text(this.levels[this.currentLevel].levelMessage);
 		$('#score').text(this.score);
 		$('.tile').on("click", function(){
-			Memory.reveal($(this));
+			Cards.reveal($(this));
 		});
 
 		//update powerup bars
@@ -499,17 +499,17 @@ $(document).ready(function(){
 		}, false);*/
 		$('#start').on("click", function(){
 			$(this).hide();
-			Memory.start();
+			Cards.start();
 			$('#shuffle').show().on("click", function(e){
 			e.stopPropagation();
-			Memory.shuffle();
+			Cards.shuffle();
 			}).prop('disabled', false);
 			$('#reset').show().on("click", function(){
-				Memory.start();
+				Cards.start();
 			}).prop('disabled', true).css('opacity', '.5');
 		});
 		$('label[for="clearLevel"], label[for="wildcard"], label[for="showBoard"], label[for="extraTime"], label[for="extraMoves"]').on("click", function(){
-			Memory.useBars($(this).attr('for'));
+			Cards.useBars($(this).attr('for'));
 		});
 	};
 	$.ajax({
@@ -517,12 +517,12 @@ $(document).ready(function(){
 		success: function(e){
 			//remember to set the levels when creating these (and maybe keep the cards themselves on the server?)
 			// for(var i = 0; i < e.length; i++){
-			// 	Memory.levels[i] = e[i];
+			// 	Cards.levels[i] = e[i];
 			// }
 			init();
 		},
 		error: function(){
-			Memory.levels = [
+			Cards.levels = [
 					{
 						type: 'normal', //for testing purposes only
 
@@ -732,7 +732,7 @@ $(document).ready(function(){
 						levelMessage: 'Clear the board in 40 moves!',
 
 						targetMatches: 8
-					},
+					}
 
 			];
 			init();

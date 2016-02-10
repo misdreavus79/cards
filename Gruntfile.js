@@ -7,12 +7,15 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 		jshint: {
-			all: ['*.js'],
+			//all: ['src/js/**/*.js', 'Gruntfile.js'],
 			options: {
+				"bitwise": true,
 				"curly": true,
 				"eqnull": true,
 				"eqeqeq": true,
 				"undef": true,
+				"browser": true,
+				"devel": true,
 				"globals": {
 					"jQuery": true
 				}
@@ -23,14 +26,14 @@ module.exports = function(grunt) {
 				banner: '<%= banner %>\n'
 			},
 			dist: {
-				src: 'memory.js', //<%= pkg.name %>
-				dest: 'memory.min.js' //<%= pkg.name %><%= pkg.version %>
+				src: 'src/js/cards.js', //<%= pkg.name %>
+				dest: 'src/js/cards.min.js' //<%= pkg.name %><%= pkg.version %>
 			}
 		},
 		sass: {
 			dist: {
 				files: {
-					'style.css': 'style.scss'
+					'src/css/style.css': 'src/css/style.scss'
 				}
 			}
 		},
@@ -40,7 +43,7 @@ module.exports = function(grunt) {
 					banner: '<%= banner %>'
 				},
 				files: {
-					'style.min.css': ['reset.css', 'style.css']
+					'build/css/style.min.css': ['src/css/reset.css', 'src/css/style.css']
 				}
 			}
 		},
@@ -59,10 +62,29 @@ module.exports = function(grunt) {
 				separator: ';'
 			},
 			dist: {
-				src: ['jquery-2.1.3.min.js', 'memory.min.js'],
-				dest: '<%= pkg.name %>-<%= pkg.version %>.js'
+				src: ['src/js/jquery.js', 'src/js/cards.min.js'],
+				dest: 'build/js/<%= pkg.name %>-<%= pkg.version %>.js'
 			}
 		}
+		watch: {
+      		options: {
+      			livereload: true,
+      		},
+      		sass: {
+      			files: ['src/css/**/*.scss'],
+      			tasks: ['sass'],
+      		},
+      		scripts: {
+				files: ['src/js/**/*.js', 'Gruntfile.js'],
+				tasks: ['jshint'],
+				options: {
+					spawn: false,
+				}
+      		},
+      		html: {
+      			files: ['src/*.html'],
+      		}
+      	},
 
 	}); 
 
@@ -74,5 +96,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.registerTask('default', ['uglify', 'cssmin']);
+	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('build', ['uglify', 'concat', 'cssmin', 'imagemin'])
 };

@@ -1,0 +1,212 @@
+[
+	{
+		"type": "normal", 
+
+		"numberOfTiles": 4,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 2
+	},
+	{
+		"type": "normal", 
+
+		"numberOfTiles": 6,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 3
+	},
+	{
+		"type": "normal", 
+
+		"numberOfTiles": 8,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 4
+	},
+	{
+		"type": "normal", 
+
+		"numberOfTiles": 10,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 5
+	},
+	{
+		"type": "normal", 
+
+		"numberOfTiles": 12,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 6
+	},
+	{
+		"type": "time", 
+
+		"targetSeconds": 60, 
+
+		"numberOfTiles": 12,
+
+		"levelMessage": "Clear the board in 60 seconds!",
+
+		"targetMatches": 6
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 12,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 6
+	},
+	{
+		"type": "time", 
+
+		"targetSeconds": 60, 
+
+		"numberOfTiles": 14,
+
+		"levelMessage": "Clear the board in 60 seconds!",
+
+		"targetMatches": 7
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 14,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 7
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "time", 
+
+		"targetSeconds": 55, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "time", 
+
+		"targetSeconds": 50, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 36, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "time", 
+
+		"targetSeconds": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	},
+	{
+		"type": "moves", 
+
+		"targetMoves": 40, 
+
+		"numberOfTiles": 16,
+
+		"levelMessage": "Clear the board in 40 moves!",
+
+		"targetMatches": 8
+	}
+]
