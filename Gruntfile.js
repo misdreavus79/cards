@@ -88,7 +88,7 @@ module.exports = function(grunt) {
       	webpack: {
       		main: {
       			entry: [
-					'react/src/App.js'
+					'./react/src/App.js'
 				],
 				output: {
 					path: 'react/',
