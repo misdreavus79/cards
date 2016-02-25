@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 				src: ['src/js/jquery.js', 'src/js/cards.min.js'],
 				dest: 'build/js/<%= pkg.name %>-<%= pkg.version %>.js'
 			}
-		}
+		},
 		watch: {
       		options: {
       			livereload: 8080,
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
 					'react/src/App.js'
 				],
 				output: {
-					path: __dirname,
+					path: 'react/',
 					filename: 'app.js'
 				},
 				module:{
@@ -115,5 +115,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-webpack');
 	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('wp', ['webpack']);
 	grunt.registerTask('build', ['uglify', 'concat', 'cssmin', 'imagemin'])
 };
