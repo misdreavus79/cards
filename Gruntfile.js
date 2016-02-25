@@ -68,7 +68,7 @@ module.exports = function(grunt) {
 		}
 		watch: {
       		options: {
-      			livereload: true,
+      			livereload: 8080,
       		},
       		sass: {
       			files: ['src/css/**/*.scss'],
@@ -85,6 +85,23 @@ module.exports = function(grunt) {
       			files: ['src/*.html'],
       		}
       	},
+      	webpack: {
+      		main: {
+      			entry: [
+					'react/src/App.js'
+				],
+				output: {
+					path: __dirname,
+					filename: 'app.js'
+				},
+				module:{
+					loader: [{
+						test: /\.jsx?$/,
+						loader: 'babel'
+					}]
+				}
+      		}
+      	}
 
 	}); 
 
@@ -96,6 +113,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-webpack');
 	grunt.registerTask('default', ['watch']);
 	grunt.registerTask('build', ['uglify', 'concat', 'cssmin', 'imagemin'])
 };
