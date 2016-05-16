@@ -68,7 +68,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
       		options: {
-      			livereload: 8080,
+      			livereload: 35729,
       		},
       		sass: {
       			files: ['src/css/**/*.scss'],
@@ -83,26 +83,34 @@ module.exports = function(grunt) {
       		},
       		html: {
       			files: ['src/*.html'],
-      		}
+      		},
+      		browserify: {
+				files: ['src/js/**/*.jsx', 'Gruntfile.js'],
+				tasks: ['browserify']
+			},
       	},
-      	webpack: {
-      		main: {
-      			entry: [
-					'./react/src/App.js'
-				],
-				output: {
-					path: 'react/',
-					filename: 'app.js'
-				},
-				module:{
-					loader: [{
-						test: /\.jsx?$/,
-						loader: 'babel'
-					}]
-				}
-      		}
-      	}
-
+      	browserify: {
+			dist: {
+				options: {
+					transform: [
+						[
+							'babelify', 
+							{
+								presets: ['es2015', 'react']
+							}
+						]
+					],
+					alias: {
+						
+					},
+					browserifyOptions: {
+						standalone: 'cards'
+					}
+				},        
+				src: ['src/js/components/**/Main.jsx'],
+				dest: 'src/js/cards.js',
+			}
+		},
 	}); 
 
 	//load tasks
@@ -113,8 +121,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-webpack');
+	grunt.loadNpmTasks('grunt-browserify');
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('wp', ['webpack']);
 	grunt.registerTask('build', ['uglify', 'concat', 'cssmin', 'imagemin'])
 };
