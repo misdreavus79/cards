@@ -3,3 +3,4 @@ mongo
 .DS_Store
 keep
 .sass_cache
+src/css/style.css.map
