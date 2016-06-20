@@ -15,11 +15,11 @@ body{
 	margin-bottom: 2em;
 	position: relative;
 }
-.score, .powerups{
+.details, .powerups{
 	width: 20%;
 	text-align: center;
 }
-.main, .score, .powerups{
+.main, .details, .powerups{
 	float: left;
 }
 section{
@@ -80,7 +80,7 @@ h2{
 #start:active{
 	color:#FFD700;
 }
-#wordlist, #score, #time, #moves{
+#wordlist, #details, #time, #moves{
 	font-variant: small-caps;
 	color: #9400D3;
 	font-weight: bold;
@@ -91,7 +91,7 @@ h2{
 #wordlist li{
 	font-size: 1.5em;
 }
-#score, #time, #moves{
+#details, #time, #moves{
 	font-size: 200%;
 }
 .lives{

@@ -82,12 +82,12 @@ module.exports = function(grunt) {
 				}
       		},
       		html: {
-      			files: ['src/*.html'],
+      			files: ['src/*.html']
       		},
       		browserify: {
 				files: ['src/js/**/*.jsx', 'Gruntfile.js'],
 				tasks: ['browserify']
-			},
+			}
       	},
       	browserify: {
 			dist: {
@@ -108,9 +108,34 @@ module.exports = function(grunt) {
 					}
 				},        
 				src: ['src/js/components/**/Main.jsx'],
-				dest: 'src/js/cards.js',
+				dest: 'src/js/memory.js',
 			}
 		},
+		copy: {
+			img: {
+				cwd: 'src',
+				src: 'images/**',
+				dest: 'build/',
+				expand: true
+			},
+			html: {
+				expand: true,
+				src: ['src/*.html', '!**/node_modules/**', '!**/dist/**'],
+				dest: 'build/',
+				options:{
+					process: function(content, srcpath){
+						content = content.replace('<script src="//localhost:35729/livereload.js"></script>', '');
+						content = content.replace('css/style.css', 'https://storage.googleapis.com/cards/css/style.min.css');
+						content = content.replace('js/start.js', 'https://storage.googleapis.com/cards/js/start.min.js');
+						return content;
+					}
+				}
+			},
+			pkgJson: {
+				src: 'package.json',
+				dest: 'dist/'
+			}
+		}
 	}); 
 
 	//load tasks
@@ -121,7 +146,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('build', ['uglify', 'concat', 'cssmin', 'imagemin'])
+	grunt.registerTask('bundle', ['browserify']);
+	grunt.registerTask('build', ['uglify', 'cssmin', 'imagemin', 'copy'])
 };
