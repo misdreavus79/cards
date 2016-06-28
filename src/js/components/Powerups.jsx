@@ -3,8 +3,16 @@ import React from "react";
 class Powerups extends React.Component{
 	constructor(){
 		super();
+		this.defaultProps = {
+			current: 0,
+			target: 10,
+			full: false,
+			execute: () => {
 
+			}
+		}
 	}
+	
 	render(){
 		return(
 			<aside class="powerups">
@@ -33,5 +41,6 @@ class Powerups extends React.Component{
 		);
 	}
 }		
-			
+
+export default Powerups;			
 		

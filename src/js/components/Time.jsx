@@ -9,7 +9,7 @@ class Time extends React.Component{
 	}
 	countdown(){
 		this.setState({
-			seconds: this.state.seconds - 1;
+			seconds: this.state.seconds - 1
 		});
 	}
 	componentWillMount(){
