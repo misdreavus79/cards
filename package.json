@@ -4,7 +4,8 @@
   "description": "Classic Memory Game",
   "main": "memory.js",
   "scripts": {
-    "start": "webpack",
+    "build:dev": "webpack --env=dev --progress --profile --colors",
+    "build:dist": "webpack --env=prod --progress --profile --colors",
     "upload": "gsutil cp -r -a public-read assets/* gs://cards"
   },
   "repository": {
