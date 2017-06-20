@@ -4,6 +4,7 @@ const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
 const WebpackChunkHash = require("webpack-chunk-hash");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
@@ -19,7 +20,37 @@ module.exports = {
 		sourceMapFilename: '[name].map'
 	},
 
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				use: 'babel-loader',
+				exclude: ['node_modules'],
+				options: {
+		          presets: ['env']
+		        }
+			},
+			{
+				test: /\.scss$/,
+	            use: ExtractTextPlugin.extract({
+	                use: [
+	                	'css-loader',
+	                	'sass-loader'
+	                ]
+
+	            })
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					'file-loader'
+				]
+			}
+		]
+	},
+
 	plugins: [
+		new ExtractTextPlugin('style.css'),
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false

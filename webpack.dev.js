@@ -2,13 +2,18 @@ const path = require('path');
 
 const webpack = require('webpack');
 
+const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
+const WebpackChunkHash = require("webpack-chunk-hash");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+
 module.exports = {
 	devtool: 'cheap-module-source-map',
 
 	entry: { 
-		app: './src/js/cards.js', 
-		vendors: './src/js/vendors.js' 
-	}
+		app: './src/js/cards.js',
+		vendor: ['react', 'react-dom']
+	},
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -21,7 +26,13 @@ module.exports = {
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
-				use: 'babel-loader'
+				use: {
+					loader: 'babel-loader',
+					options: {
+			          presets: ['env']
+			        }
+				},
+				exclude: /(node_modules|bower_components)/
 			},
 			{
 				test: /\.scss$/,
@@ -41,7 +52,11 @@ module.exports = {
 	},
 
 	plugins: [
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "vendor" // vendor libs + extracted manifest
+	    }),
+		new HtmlWebpackPlugin()
 	],
 
 	devServer: {
