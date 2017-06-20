@@ -29,7 +29,7 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-			          presets: ['env']
+			          presets: ['env', 'react']
 			        }
 				},
 				exclude: /(node_modules|bower_components)/
@@ -50,7 +50,9 @@ module.exports = {
 			}
 		]
 	},
-
+	resolve: {
+		extensions: ['.js', '.jsx']
+	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({

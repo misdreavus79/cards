@@ -1,22 +1,14 @@
-import Powerups from "Powerups";
-//import React from "react";
+import React from "react";
 
+const ClearLevel = ({value, max, update}) => 
 
-class ClearLevel extends Powerups{
-	constructor(){
-		super(props);
-	}
-	
-	render(){
-		return(
-			<label for="clearLevel">Clear Level
-				<progress value="0" max="50" id="clearLevel">
-					Progress: 
-				</progress>
-			</label>
-		);
-	}
-}		
+	<label htmlFor="clearLevel" onClick={update}>Clear Level
+		<progress 
+			value={value}
+			max={max}
+			id="clearLevel">
+			Progress: 
+		</progress>
+	</label>
 
-export default ClearLevel;			
-		
+export default ClearLevel;
