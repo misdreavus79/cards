@@ -165,7 +165,7 @@ var Cards = {
 		var val = 1, colorCounter = 0, shapeCounter = 0;
 
 		for(var i = 1; i <= this.levels[this.currentLevel].numberOfTiles; i++){ 
-			this.currentElements[(i - 1)] = '<td><button class="tile" data="' + val + '"><img src="shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button></td>';
+			this.currentElements[(i - 1)] = '<td><button class="tile" data="' + val + '"><img src="../shapes/' + this.shapes[shapeCounter] + '-' + this.colors[colorCounter] + '.png"></button></td>';
 			
 			if((i % 2) === 0){
 				val++; //pair data values with each button
