@@ -2,11 +2,12 @@ import React from "react";
 
 const Wildcard = ({value, max, update}) => 
 
-	<label htmlFor="Wildcard" onClick={update}>Wildcard
+	<label htmlFor="wildcard">Wildcard
 		<progress 
 			value={value}
 			max={max}
-			id="Wildcard">
+			id="wildcard"
+			onClick={update}>
 			Progress: 
 		</progress>
 	</label>

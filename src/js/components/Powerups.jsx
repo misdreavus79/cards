@@ -1,11 +1,11 @@
-import React from "react";	
+import React, { Component } from "react";	
 import ClearLevel from './ClearLevel';
 import Wildcard from "./Wildcard";
 import ShowBoard from "./ShowBoard";
 import ExtraTime from "./ExtraTime";
 import ExtraMoves from "./ExtraMoves";
 
-class Powerups extends React.Component{
+class Powerups extends Component{
 	constructor(props){
 		super(props);
 
@@ -22,44 +22,36 @@ class Powerups extends React.Component{
 		this.message = this.message.bind(this);
 	}
 	updatePowerupMeter (e) {
-		switch(e){
-			case 'clearLevel':
-				if(this.state.clearLevel.full){
-					return; //no need to fill the bar, it's already full
-				}else{
-					let cl = {
-						current : this.state.clearLevel.current + 1,
-						full : this.state.clearLevel.full,
-						target : this.state.clearLevel.target
-					};
+		if(this.state.clearLevel.full){
+			return; //no need to fill the bar, it's already full
+		}else{
+			let current = this.state[e.target.id].current + 1,
+				full = (current === this.state[e.target.id].target) ? true : false,
+				cl = {
+				current : current,
+				full : full,
+				target : this.state[e.target.id].target
+			};
 
-					this.setState({
-						clearLevel: cl
-					});
-				}
-				break;
+			this.setState({
+				[e.target.id]: cl
+			});
 		}
 	}
 	usePowerup (e) {
-		console.log(e);
-		console.log(e.target.children[0], Math.random());
-		// switch(e.target.children[0].id){
-		// 	case 'clearLevel':
-		// 		if(this.state.clearLevel.full){
-		// 			let cl = {
-		// 				full: false,
-		// 				current: 0,
-		// 				target: newTarget
-		// 			}
-		// 			this.setState({
-		// 				clearLevel: cl
-		// 			});
-		// 			//this.props.updateBoardWithPowerup('clearLevel');
-		// 		}else{
-		// 			return this.message('ClearLevel is not ready yet!');
-		// 		}
-		// 		break;
-		// }
+		if(this.state[e.target.id].full){
+			let cl = {
+				full: false,
+				current: 0,
+				target: newTarget
+			}
+			this.setState({
+				[e.target.id]: cl
+			});
+			//this.props.updateBoardWithPowerup('clearLevel');
+		}else{
+			return this.message(`${e.target.id} is not ready yet!`);
+		}
 	}
 	message (msg) {
 		console.log(msg);

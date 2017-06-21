@@ -2,11 +2,12 @@ import React from "react";
 
 const ShowBoard = ({value, max, update}) => 
 
-	<label htmlFor="ShowBoard" onClick={update}>Show Board
+	<label htmlFor="showBoard">Show Board
 		<progress 
 			value={value}
 			max={max}
-			id="ShowBoard">
+			id="showBoard"
+			onClick={update}>
 			Progress: 
 		</progress>
 	</label>

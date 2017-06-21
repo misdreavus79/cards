@@ -1,9 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import Score from './Score';
 import Time from './Time';
 import Moves from './Moves';
 
-class Details extends React.Component{
+class Details extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			score: this.props.score,
+			seconds: this.props.seconds,
+			moves: this.props.moves
+		}
+	}
 
 	updateScore(){
 		this.setState({
@@ -15,10 +23,15 @@ class Details extends React.Component{
 			seconds: this.state.seconds - 1
 		});
 	}
+	moves(){
+		this.setState({
+			moves: this.state.moves - 1
+		});
+	}
 
 	render(){
 		return(
-       		<aside class="details">
+       		<aside className="details">
        			<h2>Score</h2>
        			<Score score={this.state.score} />
        			<h2>Time</h2>
@@ -29,3 +42,11 @@ class Details extends React.Component{
 		)
 	}
 }
+
+Details.defaultProps = {
+	score: 0,
+	seconds: 60,
+	moves: 40
+}
+
+export default Details;	

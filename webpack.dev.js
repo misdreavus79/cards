@@ -1,11 +1,8 @@
 const path = require('path');
-
 const webpack = require('webpack');
-
 const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
 const WebpackChunkHash = require("webpack-chunk-hash");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 
 module.exports = {
 	devtool: 'cheap-module-source-map',

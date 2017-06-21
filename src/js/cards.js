@@ -1,9 +1,10 @@
 //import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Powerups from './components/Powerups';
+import Board from './components/Board';
+import '../scss/style.scss';
 
 ReactDOM.render(
-	<Powerups />,
+	<Board />,
 	document.body
 );

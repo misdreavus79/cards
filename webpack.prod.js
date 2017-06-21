@@ -3,20 +3,19 @@ const webpack = require("webpack");
 const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
 const WebpackChunkHash = require("webpack-chunk-hash");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
 	entry: { 
 		app: './src/js/cards.js', 
-		vendor: './src/js/vendor.js' 
-	}
+		vendor: ['react', 'react-dom'] 
+	},
 
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'build'),
 		filename: '[name].[chunkhash].js',
-		chunkFilename: "[name].[chunkhash].js"
+		chunkFilename: "[name].[chunkhash].js",
 		sourceMapFilename: '[name].map'
 	},
 
@@ -24,15 +23,18 @@ module.exports = {
 		rules: [
 			{
 				test: /\.(js|jsx)$/,
-				use: 'babel-loader',
-				exclude: ['node_modules'],
-				options: {
-		          presets: ['env', 'react']
-		        }
+				use: {
+					loader: 'babel-loader',
+					options: {
+			          presets: ['env', 'react']
+			        }
+				},
+				exclude: /(node_modules|bower_components)/
 			},
 			{
 				test: /\.scss$/,
 	            use: ExtractTextPlugin.extract({
+	            	fallback: 'style-loader',
 	                use: [
 	                	'css-loader',
 	                	'sass-loader'
@@ -49,6 +51,10 @@ module.exports = {
 		]
 	},
 
+	resolve: {
+		extensions: ['.js', '.jsx', '.scss', '.css']
+	},
+
 	plugins: [
 		new ExtractTextPlugin('style.css'),
 		new webpack.LoaderOptionsPlugin({
@@ -62,13 +68,21 @@ module.exports = {
 				keep_fnames: true
 			},
 			compress: {
-				screw_ie8: true
+				warnings: false,
+				screw_ie8: true,
+				conditionals: true,
+				unused: true,
+				comparisons: true,
+				sequences: true,
+				dead_code: true,
+				evaluate: true,
+				if_return: true,
+				join_vars: true,
 			},
 			comments: false
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: ["vendor", "manifest"], // vendor libs + extracted manifest
-			minChunks: Infinity,
+			name: ["vendor", "manifest"]
 	    }),
 		new webpack.HashedModuleIdsPlugin(),
 		new WebpackChunkHash(),
@@ -76,9 +90,6 @@ module.exports = {
 			filename: "chunk-manifest.json",
 			manifestVariable: "webpackManifest"
 		}),
-		new HtmlWebpackPlugin(),
-		new InlineManifestWebpackPlugin({
-			name: 'webpackManifest'
-		})
+		new HtmlWebpackPlugin()
 	]
 }
