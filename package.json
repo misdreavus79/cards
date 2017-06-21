@@ -1,8 +1,8 @@
 {
   "name": "cards",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Classic Memory Game",
-  "main": "memory.js",
+  "main": "cards.js",
   "scripts": {
     "build:dev": "webpack --env=dev --progress --profile --colors",
     "build:prod": "webpack --env=prod --progress --profile --colors",
