@@ -1,10 +1,10 @@
 //import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Board from './components/Board';
+import Game from './components/Game';
 import '../scss/style.scss';
 
 ReactDOM.render(
-	<Board />,
+	<Game />,
 	document.body
 );

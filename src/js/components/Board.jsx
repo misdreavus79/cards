@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tiles from "./Tiles";
 
 class Board extends Component{
 	render(){
