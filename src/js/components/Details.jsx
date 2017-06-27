@@ -43,10 +43,4 @@ class Details extends Component{
 	}
 }
 
-Details.defaultProps = {
-	score: 0,
-	seconds: 60,
-	moves: 40
-}
-
 export default Details;	

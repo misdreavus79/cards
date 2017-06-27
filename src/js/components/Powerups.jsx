@@ -5,17 +5,24 @@ import ShowBoard from "./ShowBoard";
 import ExtraTime from "./ExtraTime";
 import ExtraMoves from "./ExtraMoves";
 
+import { powerupsReducer } from '../common/Reducers';
+import { createStore } from 'redux';
+import { usePowerup } from '../common/ActionCreators';
+
+const powerupStore = createStore(powerupsReducer);
+
+
 class Powerups extends Component{
 	constructor(props){
 		super(props);
-
 		this.state = {
-			clearLevel: this.props.clearLevel,
-			wildcard: this.props.wildcard,
-			showBoard: this.props.showBoard,
-			extraTime: this.props.extraTime,
-			extraMoves: this.props.extraMoves
+			clearLevel: props.default.defaultState.clearLevel,
+			wildcard: props.default.defaultState.wildcard,
+			showBoard: props.default.defaultState.showBoard,
+			extraTime: props.default.defaultState.extraTime,
+			extraMoves: props.default.defaultState.extraMoves
 		}
+
 		//event handler bindings
 		this.updatePowerupMeter = this.updatePowerupMeter.bind(this);
 		this.usePowerup = this.usePowerup.bind(this);
@@ -50,7 +57,7 @@ class Powerups extends Component{
 			});
 			//this.props.updateBoardWithPowerup('clearLevel');
 		}else{
-			return this.message(`${e.target.id} is not ready yet!`);
+			return this.message(`${e.target.id} is not ready yet!`); 
 		}
 	}
 	message (msg) {
@@ -63,7 +70,7 @@ class Powerups extends Component{
 				<ClearLevel 
 					value={this.state.clearLevel.current}
 					max={this.state.clearLevel.target}
-					update={this.usePowerup} />
+					onClick={() => powerupStore.dispatch(usePowerup('clearLevel'))} />
 
 				<Wildcard 
 					value={this.state.wildcard.current}
@@ -86,34 +93,6 @@ class Powerups extends Component{
 					update={this.usePowerup} />
 			</aside>
 		);
-	}
-}		
-
-Powerups.defaultProps = {
-	clearLevel: {
-		current: 0,
-		target: 50,
-		full: false
-	},
-	wildcard: {
-		current: 0,
-		target: 30,
-		full: false
-	},
-	showBoard: {
-		current: 0,
-		target: 40,
-		full: false
-	},
-	extraTime: {
-		current: 0,
-		target: 20,
-		full: false
-	},
-	extraMoves: {
-		current: 0,
-		target: 20,
-		full: false
 	}
 }
 
