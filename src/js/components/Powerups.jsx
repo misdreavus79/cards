@@ -45,21 +45,6 @@ class Powerups extends Component{
 			});
 		}
 	}
-	usePowerup (e) {
-		if(this.state[e.target.id].full){
-			let cl = {
-				full: false,
-				current: 0,
-				target: newTarget
-			}
-			this.setState({
-				[e.target.id]: cl
-			});
-			//this.props.updateBoardWithPowerup('clearLevel');
-		}else{
-			return this.message(`${e.target.id} is not ready yet!`); 
-		}
-	}
 	message (msg) {
 		console.log(msg);
 	}
@@ -75,22 +60,22 @@ class Powerups extends Component{
 				<Wildcard 
 					value={this.state.wildcard.current}
 					max={this.state.wildcard.target}
-					update={this.usePowerup} />
+					onClick={() => powerupStore.dispatch(usePowerup('wildcard'))} />
 
 				<ShowBoard 
 					value={this.state.showBoard.current}
 					max={this.state.showBoard.target}
-					update={this.usePowerup} />
+					onClick={() => powerupStore.dispatch(usePowerup('showBoard'))} />
 
 				<ExtraTime 
 					value={this.state.extraTime.current}
 					max={this.state.extraTime.target}
-					update={this.usePowerup} />
+					onClick={() => powerupStore.dispatch(usePowerup('extraTime'))} />
 
 				<ExtraMoves 
 					value={this.state.extraMoves.current}
 					max={this.state.extraMoves.target}
-					update={this.usePowerup} />
+					onClick={() => powerupStore.dispatch(usePowerup('extraMoves'))} />
 			</aside>
 		);
 	}

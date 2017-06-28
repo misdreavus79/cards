@@ -4,6 +4,15 @@ export const powerupsReducer = (state = defaultState, action) => {
 	switch(action.type){
 		case 'USE_POWERUP':
 			console.log(action);
+			break;
+	}
+}
+
+export const matchReducer = (state = defaultState, action) => {
+	switch(action.type){
+		case 'FILL_POWER_BARS':
+			console.log(action);
+			break;
 	}
 }
 
