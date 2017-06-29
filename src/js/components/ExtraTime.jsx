@@ -1,13 +1,13 @@
 import React from "react";
 
-const ExtraTime = ({value, max, update}) => 
+const ExtraTime = ({value, max, onClick}) => 
 
 	<label htmlFor="extraTime">Extra Time
 		<progress 
 			value={value}
 			max={max}
 			id="extraTime"
-			onClick={update}>
+			onClick={onClick}>
 			Progress: 
 		</progress>
 	</label>

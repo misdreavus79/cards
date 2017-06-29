@@ -1,16 +1,43 @@
+//app
 import React, { Component } from "react";
 import Tile from "./Tile";
-import Counter from "../common/Counter";
+
+//state
+import { compare, revealCard } from '../common/ActionCreators';
+import { tileDetails } from '../common/Loader';
+
+//lib 
+import Randomize from '../lib/RandomizeArray';
+import Counter from '../lib/Counter';
 
 class TileList extends Component {
+	componentDidMount(){
+		const { store } = this.props;
+		this.unsubscribe = store.subscribe(() => this.forceUpdate());
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+		let reveal = revealCard(id);
+
+		return (
+			<Tile 
+				key={i}
+				matcher={id} 
+				shape={shapes[shapeIndex]}
+				color={colors[colorIndex]}
+				onClick={() => store.dispatch(reveal)}
+				isActive={false}
+			/>
+		)
+	}
 	render(){
-		const { levels, shapes, colors, currentLevel} = this.props;
-		let tiles = [...Array(16).keys()],
-			formattedTiles = tiles.map( (el, i) => {
-				
-			});
+		
 		return(
-			<div>PPP</div>
+			<div 
+				id="board" 
+				className="group">
+				PPP
+			</div>
 		)
 	}
 }

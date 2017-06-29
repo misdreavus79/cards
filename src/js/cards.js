@@ -3,12 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/Game';
 import '../scss/style.scss';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { defaultState, levels } from './common/InitialState';
+import Store from './common/Store';
 
 ReactDOM.render(
-	<Game defaultState={defaultState} levels={levels} />,
+	<Game store={Store} />,
 	document.body
 );
 

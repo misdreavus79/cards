@@ -1,4 +1,6 @@
 import { createStore } from 'redux';
-import { powerups } from './Reducers';
+import { allReducers } from './Reducers';
 
-// export const PowerupStore = createStore(powerups);
+const Store = createStore(allReducers);
+
+export default Store;

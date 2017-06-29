@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import Title from "./Title";
-import Board from "./Board";
+import TileList from "./TileList";
 import Start from "./Start";
 import Reset from "./Reset";
 import Shuffle from "./Shuffle";
+import { start } from '../common/ActionCreators';
 
-class Main extends Component{
-	render(){
-		return(
-			<main className="main" role="main">
-				<Title />
-				<Board />	
-				<Start />
-				<Reset />
-				<Shuffle />
-			</main>
-		)
-	}
-}
+const Main = ({ store }) => (
+	<main className="main" role="main">
+		<Title />
+		<TileList store={store} />	
+		<Start onClick={() => store.dispatch(start())} />
+		<Reset />
+		<Shuffle />
+	</main>
+)
 
 export default Main;

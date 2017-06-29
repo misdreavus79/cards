@@ -1,13 +1,13 @@
 import React from "react";
 
-const ShowBoard = ({value, max, update}) => 
+const ShowBoard = ({value, max, onClick}) => 
 
 	<label htmlFor="showBoard">Show Board
 		<progress 
 			value={value}
 			max={max}
 			id="showBoard"
-			onClick={update}>
+			onClick={onClick}>
 			Progress: 
 		</progress>
 	</label>

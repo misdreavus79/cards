@@ -1,10 +1,18 @@
 /*style.css*/
 @charset "utf-8";
 
+@import url('https://fonts.googleapis.com/css?family=Fresca');
+
+html{
+	*{
+		box-sizing: border-box;
+	}
+}
+
 body{
-	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	font-family: 'Fresca', sans-serif;
 	padding-top: 1em;
-	background: rgba(190, 190, 190, .2);
+	background: rgba(100, 190, 110, .2);
 }
 .main{
 	width: 60%;
@@ -28,6 +36,7 @@ section{
 	color: #9400D3;
 }
 button{
+	font-family: 'Fresca', sans-serif;
 	background: #5cbcab;
 	color:#fff;
 	border:none;

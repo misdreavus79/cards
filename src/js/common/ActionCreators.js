@@ -1,8 +1,8 @@
 import ActionTypes from "./ActionTypes";
 
-export const compare = (tiles) => ({
+export const compare = (cards) => ({
 	type: ActionTypes.compare,
-	tiles
+	cards
 });
 
 export const decreaseMoves = () => ({
@@ -23,38 +23,18 @@ export const end = (status) => ({
 	status: status
 });
 
-export const fillPowerbars = () => ({
-	type: ActionTypes.fillPowerbars
-});
-
-export const increaseMoves = () => ({
-	type: ActionTypes.increaseMoves
+export const fillPowerbars = (bar) => ({
+	type: ActionTypes.fillPowerbars,
+	bar
 });
 
 export const increaseScore = (newScore) => ({
 	type: ActionTypes.increaseScore,
-	score: newScore
-});
-
-export const increaseSeconds = () => ({
-	type: ActionTypes.increaseSeconds
+	newScore
 });
 
 export const lose = () => ({
 	type: ActionTypes.lose
-});
-
-export const match = (tiles) => ({
-	type: ActionTypes.match,
-	tiles: tiles
-});
-
-export const nextLevel = () => ({
-	type: ActionTypes.nextLevel
-});
-
-export const prevLevel = () => ({
-	type: ActionTypes.prevLevel
 });
 
 export const resetMoves = () => ({
@@ -73,9 +53,9 @@ export const respawn = () => ({
 	type: ActionTypes.respawn
 });
 
-export const reveal_card = (card) => ({
+export const revealCard = (card) => ({
 	type: ActionTypes.reveal_card,
-	card: card
+	card
 });
 
 export const shuffle = () => ({
@@ -87,8 +67,8 @@ export const start = () => ({
 });
 
 export const updateMessage = (message) => ({
-	type: ActionTypes.compare,
-	message: message
+	type: ActionTypes.updateMessage,
+	message
 });
 
 export const usePowerup = (powerup) => ({

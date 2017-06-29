@@ -4,13 +4,13 @@ import Main from "./Main";
 import Powerups from "./Powerups";
 
 
-const Game = (defaultState) => (
-	<div className="game-board">
-		<Details default={defaultState} />
-		<Main default={defaultState} />
-		<Powerups default={defaultState} />
+const Game = ({store}) => (
+	<div className="game">
+		<Details store={store} />
+		<Main store={store} />
+		<Powerups store={store} />
 	</div>
-)
+);
 
 export default Game;
 
