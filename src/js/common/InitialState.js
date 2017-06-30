@@ -28,12 +28,12 @@ const AppState = {//Your ajax call will come from here
 	},
 
 	levelDetails: {
-		id: 0
-	},
+		id: 0,
+		tiles: 0,
+		cards: [
 
-	cards: [
-
-	]
+		]
+	}
 };
 
 export default AppState;

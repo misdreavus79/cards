@@ -1,9 +1,9 @@
 import AppState from './InitialState';
 import { combineReducers } from 'redux';
-import { levels } from './Loader';
+import { levels, tileDetails } from './Loader';
 import Counter from '../lib/Counter';
 
-let { powerupDetails, tileDetails } = AppState;
+let { powerupDetails } = AppState;
 
 
 export const powerupsReducer = (state = powerupDetails, action) => {	
@@ -45,7 +45,7 @@ export const powerupsReducer = (state = powerupDetails, action) => {
 	}
 };
 
-export const compareReducer = (state = AppState.cards, action) => {
+export const compareReducer = (state = AppState.levelDetails.cards, action) => {
 	switch(action.type){
 		case 'REVEAL_CARD':
 			console.log(action);
@@ -65,32 +65,32 @@ export const compareReducer = (state = AppState.cards, action) => {
 export const levelReducer = (state = AppState.levelDetails, action) => {
 	switch(action.type){
 		case 'START_LEVEL':
-			if(state.id > 0){
-				let cards = [...Array(state.tiles).keys()],
-				id = Counter.incrementString(),
-				colorIndex = 0,
-				shapeIndex = 0,
-				formattedCards = cards.map( (el, i) => {
+				let cl = levels[state.id],
+					cards = [...Array(cl.tiles).keys()],
+					id = Counter.incrementString(),
+					colorIndex = 0,
+					shapeIndex = 0,
+					formattedCards = cards.map( (el, i) => {
 
-					if(i % 2 === 0 && i > 0){
-						id = Counter.incrementString();
-						colorIndex++;
-					}
+						if(i % 2 === 0 && i > 0){
+							id = Counter.incrementString();
+							colorIndex++;
+						}
 
-					if(colorIndex === colors.length){
-						colorIndex = 0;
-						shapeIndex++;
-					}
-					return {
-						id,
-						colorIndex,
-						shapeIndex
-					};
-				});
-				console.log(formattedCards);
-			}
-			let cl = levels[state.id],
-				newState = Object.assign({}, state, cl);
+						if(colorIndex === tileDetails.colors.length){
+							colorIndex = 0;
+							shapeIndex++;
+						}
+						return {
+							id,
+							colorIndex,
+							shapeIndex,
+							isActive: false
+						};
+					}),
+					newState;
+					cl.cards = formattedCards;
+					newState = Object.assign({}, state, cl);
 			return newState; 
 			break;
 
@@ -119,6 +119,11 @@ export const levelReducer = (state = AppState.levelDetails, action) => {
 			break;
 
 		case 'DECREASE_MOVES':
+			console.log(action);
+			return state; //switch this to newState once ready
+			break;
+
+		case 'SHUFFLE':
 			console.log(action);
 			return state; //switch this to newState once ready
 			break;

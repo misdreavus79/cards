@@ -17,26 +17,29 @@ class TileList extends Component {
 	}
 	componentWillUnmount(){
 		this.unsubscribe();
-		let reveal = revealCard(id);
-
-		return (
-			<Tile 
-				key={i}
-				matcher={id} 
-				shape={shapes[shapeIndex]}
-				color={colors[colorIndex]}
-				onClick={() => store.dispatch(reveal)}
-				isActive={false}
-			/>
-		)
 	}
 	render(){
-		
+		let { store } = this.props,
+			state = store.getState(),
+			cards = state.levelState.cards.map((el, i) => {
+				let reveal = revealCard(el);
+				return (
+					<Tile 
+						key={i}
+						matcher={el.id} 
+						shape={tileDetails.shapes[el.shapeIndex]}
+						color={tileDetails.colors[el.colorIndex]}
+						onClick={() => store.dispatch(reveal)}
+						isActive={el.isActive}
+					/>
+				)
+			});	
+
 		return(
 			<div 
 				id="board" 
 				className="group">
-				PPP
+				{cards}
 			</div>
 		)
 	}
