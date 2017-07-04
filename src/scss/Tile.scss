@@ -1,0 +1,12 @@
+.tile{
+	transition: all .2s linear;
+	backface-visibility: hidden;
+	margin-right: 18px;
+	border-radius: 5px;
+	&[data-active="false"]{
+		transform: rotate3d(0,1,0,180deg);
+	}
+	&[data-active="true"]{
+		transform: rotate3d(0,0,0,0);
+	}
+}

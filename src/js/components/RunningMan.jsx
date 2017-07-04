@@ -1,8 +1,8 @@
 import React from "react";
 
-const ClearLevel = ({value, max, onClick, full}) => 
+const RunningMan = ({value, max, onClick, full}) => 
 
-	<label htmlFor="clearLevel">Clear Level
+	<label htmlFor="clearLevel">Runningman
 		<progress 
 			value={value}
 			max={max}
@@ -13,4 +13,4 @@ const ClearLevel = ({value, max, onClick, full}) =>
 		</progress>
 	</label>
 
-export default ClearLevel;
+export default RunningMan;

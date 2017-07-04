@@ -18,7 +18,7 @@ let _counter = 1,
  */
 const Counter = {
   incrementString() {
-  	return 'id-' + String(_counter++);
+  	return 'pair-' + String(_counter++);
   },
   incrementNumber(){
   	return counter++;

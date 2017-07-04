@@ -1,15 +1,15 @@
 import React from "react";
 
-const ExtraTime = ({value, max, onClick}) => 
+const MiracleEye = ({value, max, onClick}) => 
 
-	<label htmlFor="extraTime">Extra Time
+	<label htmlFor="showBoard">Miracle Eye
 		<progress 
 			value={value}
 			max={max}
-			id="extraTime"
+			id="showBoard"
 			onClick={onClick}>
 			Progress: 
 		</progress>
 	</label>
 
-export default ExtraTime;
+export default MiracleEye;

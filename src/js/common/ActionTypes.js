@@ -5,9 +5,10 @@ const ActionTypes = {
 	decreaseSeconds: 'DECREASE_SECONDS', //(countdown)
 	end: 'END_GAME',
 	fillPowerbars: 'FILL_POWER_BAR',
+	generateCards: 'GENERATE_CARDS',
+	hide: 'HIDE_CARDS',
 	increaseScore: 'INCREASE_SCORE',
 	lose: 'LEVEL_LOSE',
-	match: 'CARDS_MATCH',
 	nextLevel: 'NEXT_LEVEL',
 	prevLevel: 'PREV_LEVEL',
 	resetMoves: 'RESET_MOVES',

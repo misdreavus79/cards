@@ -1,8 +1,8 @@
 import ActionTypes from "./ActionTypes";
 
-export const compare = (cards) => ({
+export const compare = (card) => ({
 	type: ActionTypes.compare,
-	cards
+	card
 });
 
 export const decreaseMoves = () => ({
@@ -23,9 +23,19 @@ export const end = (status) => ({
 	status: status
 });
 
-export const fillPowerbars = (bar) => ({
+export const fillPowerbars = (match) => ({
 	type: ActionTypes.fillPowerbars,
-	bar
+	match
+});
+
+export const generateCards = (number) => ({
+	type: ActionTypes.generateCards,
+	number
+});
+
+export const hideCards = (cards) => ({
+	type: ActionTypes.generateCards,
+	cards
 });
 
 export const increaseScore = (newScore) => ({
@@ -53,9 +63,9 @@ export const respawn = () => ({
 	type: ActionTypes.respawn
 });
 
-export const revealCard = (card) => ({
+export const revealCard = (id) => ({
 	type: ActionTypes.reveal_card,
-	card
+	id
 });
 
 export const shuffle = () => ({

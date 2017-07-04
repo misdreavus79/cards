@@ -4,7 +4,18 @@ export const tileDetails = {
 	shapes: ['circle', 'square', 'triangle', 'diamond', 'heart', 'crown1', 'star', 'crown2', 'moon', 'crown3', 'spade', 'club']
 };
 
-export const levels = [
+export const levels = [ //Your ajax call will come from here
+	{
+		"id": 0, //arrays are zero-based, so I have to make the first level 0, otherwise levels are out of sync
+
+		"type": "normal",
+
+		"tiles": 4,
+
+		"levelMessage": "Clear the board!",
+
+		"targetMatches": 2
+	},
 	{
 		"id": 1,
 

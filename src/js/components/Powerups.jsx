@@ -1,9 +1,8 @@
 import React, { Component } from "react";	
-import ClearLevel from './ClearLevel';
+import RunningMan from './RunningMan';
 import Wildcard from "./Wildcard";
-import ShowBoard from "./ShowBoard";
-import ExtraTime from "./ExtraTime";
-import ExtraMoves from "./ExtraMoves";
+import MiracleEye from "./MiracleEye";
+import CandyBar from "./CandyBar";
 
 import { usePowerup } from '../common/ActionCreators';
 
@@ -22,15 +21,16 @@ class Powerups extends Component{
 		const props = this.props,
 			  { store } = props,
 			  state = store.getState(),
-			  { powerupState } = state;
+			  { powerupState, levelState } = state;
+
 			  
 		return(
 			<aside className="powerups">
 				<h2>Powerups</h2>
-				<ClearLevel 
-					value={powerupState.clearLevel.current}
-					max={powerupState.clearLevel.target}
-					onClick={() => store.dispatch(usePowerup('clearLevel'))} 
+				<RunningMan 
+					value={powerupState.runningMan.current}
+					max={powerupState.runningMan.target}
+					onClick={() => store.dispatch(usePowerup('runningMan'))} 
 					full={false} />
 
 				<Wildcard 
@@ -39,23 +39,18 @@ class Powerups extends Component{
 					onClick={() => store.dispatch(usePowerup('wildcard'))} 
 					full={false} />
 
-				<ShowBoard 
-					value={powerupState.showBoard.current}
-					max={powerupState.showBoard.target}
-					onClick={() => store.dispatch(usePowerup('showBoard'))} 
+				<MiracleEye 
+					value={powerupState.miracleEye.current}
+					max={powerupState.miracleEye.target}
+					onClick={() => store.dispatch(usePowerup('miracleEye'))} 
 					full={false} />
-
-				<ExtraTime 
-					value={powerupState.extraTime.current}
-					max={powerupState.extraTime.target}
-					onClick={() => store.dispatch(usePowerup('extraTime'))} 
-					full={false} />
-
-				<ExtraMoves 
-					value={powerupState.extraMoves.current}
-					max={powerupState.extraMoves.target}
-					onClick={() => store.dispatch(usePowerup('extraMoves'))} 
-					full={false} />
+				
+				<CandyBar 
+					value={powerupState.candyBar.current}
+					max={powerupState.candyBar.target}
+					onClick={() => store.dispatch(usePowerup('candyBar'))} 
+					full={false} 
+					type={levelState.type} />
 			</aside>
 		);
 	}

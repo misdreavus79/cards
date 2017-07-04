@@ -1,0 +1,24 @@
+button{
+	font-family: 'Fresca', sans-serif;
+	background: #5cbcab;
+	color:#fff;
+	border:none;
+	min-width: 100px;
+	height: 50px;
+	font-weight: bold;
+	border-radius: 5px;
+	padding: 0;
+	margin: .5em;
+	cursor: pointer;
+	&:hover,
+	&:focus{
+		background: #9400D3;
+		color: #fff;
+	}
+	&:focus{
+		outline:none;
+	}
+	&:active{
+		color: #FFD700;
+	}
+}

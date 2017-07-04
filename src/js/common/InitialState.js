@@ -1,7 +1,7 @@
-const AppState = {//Your ajax call will come from here
+const AppState = {
 
 	powerupDetails : {
-		clearLevel: {
+		runningMan: {
 			current: 0,
 			target: 50,
 		},
@@ -11,29 +11,32 @@ const AppState = {//Your ajax call will come from here
 			target: 30,
 		},
 
-		showBoard: {
+		miracleEye: {
 			current: 0,
 			target: 40,
 		},
 
-		extraTime: {
-			current: 0,
-			target: 20,
-		},
-
-		extraMoves: {
+		candyBar: {
 			current: 0,
 			target: 20,
 		}
 	},
 
 	levelDetails: {
-		id: 0,
-		tiles: 0,
-		cards: [
+		id: 0, //arrays are zero-based, so I have to make the first level 0, otherwise levels are out of sync
 
-		]
-	}
+		type: "normal",
+
+		tiles: 4,
+
+		levelMessage: "Clear the board!",
+
+		targetMatches: 2
+	},
+
+	currentCards: [
+
+	]
 };
 
 export default AppState;

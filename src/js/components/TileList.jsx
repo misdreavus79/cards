@@ -1,14 +1,12 @@
 //app
 import React, { Component } from "react";
+import { batchActions } from "redux-batched-actions";
 import Tile from "./Tile";
+import '../../scss/Board.scss';
 
 //state
-import { compare, revealCard } from '../common/ActionCreators';
+import { compare, revealCard, hideCards, fillPowerbars } from '../common/ActionCreators';
 import { tileDetails } from '../common/Loader';
-
-//lib 
-import Randomize from '../lib/RandomizeArray';
-import Counter from '../lib/Counter';
 
 class TileList extends Component {
 	componentDidMount(){
@@ -21,20 +19,33 @@ class TileList extends Component {
 	render(){
 		let { store } = this.props,
 			state = store.getState(),
-			cards = state.levelState.cards.map((el, i) => {
-				let reveal = revealCard(el);
+			cards = state.currentCards.map((el, i) => {
 				return (
 					<Tile 
 						key={i}
-						matcher={el.id} 
+						id={el.id}
+						matcher={el.pair} 
 						shape={tileDetails.shapes[el.shapeIndex]}
 						color={tileDetails.colors[el.colorIndex]}
-						onClick={() => store.dispatch(reveal)}
+						onClick={() => 
+							el.isActive ?
+							'' :
+							store.dispatch(batchActions([
+								revealCard(el.id),
+								compare(el.pair),
+								fillPowerbars(state.compareState.match)
+								])
+							)}
 						isActive={el.isActive}
 					/>
 				)
-			});	
-
+			});
+			// console.group("State:");
+			// 	console.log(state.powerupState);
+			// 	console.log(state.compareState);
+			// 	console.log(state.levelState);
+			// 	console.log(state.currentCards);
+			// console.groupEnd();
 		return(
 			<div 
 				id="board" 

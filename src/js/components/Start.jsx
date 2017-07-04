@@ -1,4 +1,6 @@
 import React from "react";
+import '../../scss/Start.scss';		
+import '../../scss/Button.scss';
 
 //specific buttons for the sake of this build,
 //but these can be generalized to a <Button /> 
