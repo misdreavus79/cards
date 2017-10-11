@@ -176,6 +176,10 @@ const cardsReducer = (state = currentCards, action) => {
 			break;
 
 		case 'COMPARE_CARDS':
+			console.group("Compare Cards:");
+				console.log(state);
+				console.log(action);
+			console.groupEnd();
 			// let hide = state.map((el) => {
 			// 	let temp = Object.assign({}, el);
 			// 	if(temp.id === action.cards[0] || temp.id === action.cards[1]){
