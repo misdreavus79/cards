@@ -13,4 +13,4 @@ const Start = ({onClick}) =>
 		Play
 	</button>
 
-export default Start
+export default Start;

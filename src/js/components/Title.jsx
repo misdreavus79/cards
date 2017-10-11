@@ -1,9 +1,10 @@
 import React from "react";
+import '../../scss/Title.scss';
 
 const Title = ({message}) =>
 
 	<header>
-		<h1 id="title"><sup>The</sup>Cards! Game</h1>
+		<h1 id="title"><sup>The</sup>Cards!<sub>Game</sub></h1>
 		<h2 id="message">{message}</h2>
 	</header>
 

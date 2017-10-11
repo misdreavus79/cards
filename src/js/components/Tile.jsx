@@ -5,8 +5,8 @@ const Tile = ({shape, color, matcher, onClick, isActive, id}) => (
 	<img 
 		src={
 			isActive ?
-			`shapes/${shape}-${color}.png` :
-			`shapes/blank.png`
+			`//storage.googleapis.com/sca/cards/shapes/${shape}-${color}.png` :
+			`//storage.googleapis.com/sca/cards/shapes/blank.png`
 		} 
 		onClick={onClick}
 		data-active={isActive}
