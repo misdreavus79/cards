@@ -7,32 +7,17 @@ import Randomize from '../lib/Randomize';
 let { powerupDetails, levelDetails, currentCards } = AppState;
 
 export const powerupsReducer = (state = powerupDetails, action) => {
-console.group("Action:");
-	console.log(action);
-	console.log(state);
-console.groupEnd();
 	switch(action.type){
 		case 'FILL_POWER_BAR':
+			console.log('inside fill powerbar')
 			let newPowerBar = Object.assign({}, state);
 			if(action.match){
-				console.group("Cards:");
+				console.group("Fill Power Bar:");
 					console.log("match");
 					console.log(newPowerBar);
 				console.groupEnd();
 			}
-			// if(state[action.bar].full){
-			// 	return state; //no need to fill the bar, it's already full
-			// }else{
-			// 	let current = state[bar].current + 1,
-			// 		full = (current === state[action.bar].target) ? true : false,
-			// 		cl = {
-			// 			current : current,
-			// 			full : full,
-			// 			target : state[action.bar].target
-			// 		},
-			// 		newState = Object.assign({}, state, cl);
-			// 		return newState;
-			// }
+
 			return state;
 			break;
 
@@ -89,7 +74,7 @@ export const compareReducer = (state = {cards: [], match: false}, action) => {
 
 export const levelReducer = (state = levelDetails, action) => {
 	switch(action.type){
-		case 'START_LEVEL':
+		case 'PLAY_LEVEL':
 			let cl = levels[state.id],
 				newState = Object.assign({}, state, cl);
 			return newState; 

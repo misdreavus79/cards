@@ -4,7 +4,7 @@ import Wildcard from "./Wildcard";
 import MiracleEye from "./MiracleEye";
 import CandyBar from "./CandyBar";
 
-import { usePowerup } from '../common/ActionCreators';
+import { usePowerup, fillPowerbars } from '../common/ActionCreators';
 
 class Powerups extends Component{
 	componentDidMount(){
@@ -14,16 +14,11 @@ class Powerups extends Component{
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
-	message (msg) {
-		console.log(msg);
-	}
 	render(){
-		const props = this.props,
-			  { store } = props,
+		const { store } = this.props,
 			  state = store.getState(),
 			  { powerupState, levelState } = state;
 
-			  
 		return(
 			<aside className="powerups">
 				<h2>Powerups</h2>
@@ -31,25 +26,25 @@ class Powerups extends Component{
 					value={powerupState.runningMan.current}
 					max={powerupState.runningMan.target}
 					onClick={() => store.dispatch(usePowerup('runningMan'))} 
-					full={false} />
+					full={powerupState.runningMan.full} />
 
 				<Wildcard 
 					value={powerupState.wildcard.current}
 					max={powerupState.wildcard.target}
 					onClick={() => store.dispatch(usePowerup('wildcard'))} 
-					full={false} />
+					full={powerupState.wildcard.full} />
 
 				<MiracleEye 
 					value={powerupState.miracleEye.current}
 					max={powerupState.miracleEye.target}
 					onClick={() => store.dispatch(usePowerup('miracleEye'))} 
-					full={false} />
+					full={powerupState.miracleEye.full} />
 				
 				<CandyBar 
 					value={powerupState.candyBar.current}
 					max={powerupState.candyBar.target}
 					onClick={() => store.dispatch(usePowerup('candyBar'))} 
-					full={false} 
+					full={powerupState.candyBar.full} 
 					type={levelState.type} />
 			</aside>
 		);

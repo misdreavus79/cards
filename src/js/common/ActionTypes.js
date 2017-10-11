@@ -17,7 +17,7 @@ const ActionTypes = {
 	respawn: 'RESPAWN_TILES',
 	reveal_card: 'REVEAL_CARD',
 	shuffle: 'SHUFFLE_BOARD',
-	start: 'START_LEVEL',
+	play: 'PLAY_LEVEL',
 	updateMessage: 'UPDATE_MESSAGE',
 	usePowerup: 'USE_POWERUP',
 	win: 'LEVEL_WIN',

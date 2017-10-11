@@ -72,8 +72,8 @@ export const shuffle = () => ({
 	type: ActionTypes.shuffle
 });
 	
-export const start = () => ({
-	type: ActionTypes.start
+export const play = () => ({
+	type: ActionTypes.play
 });
 
 export const updateMessage = (message) => ({
