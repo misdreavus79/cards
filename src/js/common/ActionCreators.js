@@ -31,16 +31,6 @@ export const fillPowerbars = (match) => ({
 	match
 });
 
-export const generateCards = (number) => ({
-	type: ActionTypes.generateCards,
-	number
-});
-
-export const hideCards = (cards) => ({
-	type: ActionTypes.generateCards,
-	cards
-});
-
 export const increaseScore = (newScore) => ({
 	type: ActionTypes.increaseScore,
 	newScore
@@ -89,13 +79,11 @@ export const usePowerup = (powerup) => ({
 	powerup
 });
 
-export function compareAndFill(card){
-	console.log('active')
+export function hideIfNeeded(card){
 	return function(dispatch, getState){
-		console.log('active x 2');
 		dispatch(compare(card));
-		let match = getState().compareState.match;
-		return dispatch(fillPowerbars(match));
+		let match = getState().levelState.match;
+		// return dispatch(fillPowerbars(match));
 	};
 }
 

@@ -23,20 +23,15 @@ const AppState = {
 	},
 
 	levelDetails: {
-		id: 0, //arrays are zero-based, so I have to make the first level 0, otherwise levels are out of sync
-
+		id: 10, //arrays are zero-based, so I have to make the first level 0, otherwise levels are out of sync
 		type: "normal",
-
 		tiles: 4,
-
 		levelMessage: "Clear the board!",
-
-		targetMatches: 2
-	},
-
-	currentCards: [
-
-	]
+		targetMatches: 2,
+		levelCards: [],
+		activeCards: [],
+		match: false
+	}
 };
 
 export default AppState;

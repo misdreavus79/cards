@@ -12,6 +12,13 @@ class Details extends Component{
 			moves: this.props.moves
 		}
 	}
+	componentDidMount(){
+		const { store } = this.props;
+		this.unsubscribe = store.subscribe(() => this.forceUpdate());
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+	}
 
 	updateScore(){
 		this.setState({

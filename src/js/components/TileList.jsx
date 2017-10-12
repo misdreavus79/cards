@@ -1,6 +1,5 @@
 //app
 import React, { Component } from "react";
-import { batchActions } from "redux-batched-actions";
 import Tile from "./Tile";
 import '../../scss/Board.scss';
 
@@ -19,7 +18,7 @@ class TileList extends Component {
 	render(){
 		let { store } = this.props,
 			state = store.getState(),
-			cards = state.currentCards.map((el, i) => {
+			cards = state.levelState.levelCards.map((el, i) => {
 				return (
 					<Tile 
 						key={i}
@@ -30,21 +29,16 @@ class TileList extends Component {
 						onClick={() => 
 							el.isActive ?
 							'' :
-							store.dispatch(batchActions([
-								revealCard(el.id),
-								compare(el.pair),
-								fillPowerbars(state.compareState.match)
-								])
-							)}
+							store.dispatch(compare(el))
+						}
 						isActive={el.isActive}
 					/>
 				)
 			});
-			// console.group("State:");
+			// console.group("State (inside titlelist):");
 			// 	console.log(state.powerupState);
-			// 	console.log(state.compareState);
 			// 	console.log(state.levelState);
-			// 	console.log(state.currentCards);
+			// 	console.log(state.cardsDetails);
 			// console.groupEnd();
 		return(
 			<div 

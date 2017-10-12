@@ -4,7 +4,7 @@ import { enableBatching } from "redux-batched-actions";
 import thunk from 'redux-thunk';
 
 const Store = createStore(
-	enableBatching(allReducers),
+	allReducers,
 	applyMiddleware(thunk)
 );
 

@@ -4,7 +4,7 @@ import Title from "./Title";
 import TileList from "./TileList";
 import Play from "./Play";
 import Shuffle from "./Shuffle";
-import { play, generateCards } from '../common/ActionCreators';
+import { play } from '../common/ActionCreators';
 import {batchActions} from "redux-batched-actions";
 
 const Main = ({ store }) => (
@@ -12,7 +12,7 @@ const Main = ({ store }) => (
 		<Title message={store.getState().levelState.levelMessage} />
 		<TileList store={store} />	
 		<Play 
-			onClick={() => store.dispatch(batchActions([play(), generateCards(store.getState().levelState.tiles)], 'DO_BOTH'))}
+			onClick={() => store.dispatch(play())}
 			text="Play" />
 		<Shuffle />
 	</main>

@@ -4,7 +4,7 @@ import { levels, tileDetails } from './Loader';
 import Counter from '../lib/Counter';
 import Randomize from '../lib/Randomize';
 
-let { powerupDetails, levelDetails, currentCards } = AppState;
+let { powerupDetails, levelDetails, cardsDetails } = AppState;
 
 export const powerupsReducer = (state = powerupDetails, action) => {
 	switch(action.type){
@@ -42,42 +42,75 @@ export const powerupsReducer = (state = powerupDetails, action) => {
 	}
 };
 
-export const compareReducer = (state = {cards: [], match: false}, action) => {
-	switch(action.type){
-		case 'COMPARE_CARDS':
-			let compareState = Object.assign({}, state);
-
-			compareState.cards.push(action.card);
-			
-			if(compareState.cards.length < 2){
-				return compareState;
-			}else if (compareState.cards.length === 2){
-				if(compareState.cards[0] === compareState.cards[1]){
-					compareState.match = true;
-				}else{
-					// console.log(compareState.cards, action.type);
-					// cardsReducer(undefined, {
-					// 	type: action.type,
-					// 	cards: compareState.cards
-					// });
-				}
-				compareState.cards = [];
-			}
-
-			return compareState;
-			break;
-
-		default:
-			return state;
-	}
-};
-
-export const levelReducer = (state = levelDetails, action) => {
+const levelReducer = (state = levelDetails, action) => {
 	switch(action.type){
 		case 'PLAY_LEVEL':
 			let cl = levels[state.id],
-				newState = Object.assign({}, state, cl);
-			return newState; 
+				newState = Object.assign({}, state, cl),
+				cards = [...Array(newState.tiles).keys()],
+				pair = Counter.incrementString(),
+				colorIndex = 0,
+				shapeIndex = 0,
+				formattedCards = cards.map( (el, i) => {
+
+					if(i % 2 === 0 && i > 0){
+						pair = Counter.incrementString();
+						colorIndex++;
+					}
+
+					if(colorIndex === tileDetails.colors.length){
+						colorIndex = 0;
+						shapeIndex++;
+					}
+					return {
+						id: i,
+						pair,
+						colorIndex,
+						shapeIndex,
+						isActive: false
+					};
+				});
+				newState.levelCards = Randomize(formattedCards);
+
+			return newState;
+			break;
+
+		case 'COMPARE_CARDS':
+			let compareState = Object.assign({}, state);
+
+			console.log("compare cards: ", compareState);
+			console.log("action: ", action);
+
+			compareState.activeCards.push(action.card);
+
+			compareState.levelCards.forEach(el => {
+				if(el.id === action.card.id){
+					el.isActive = true;
+				}
+			});
+
+			if(compareState.type === "moves"){
+				compareState.targetMoves--;
+			}
+			
+			
+			if(compareState.activeCards.length < 2){
+				return compareState;
+			}else if (compareState.activeCards.length === 2){
+				if(compareState.activeCards[0].pair === compareState.activeCards[1].pair){
+					compareState.match = true;
+					compareState.targetMatches--;
+				}else{
+					compareState.levelCards.forEach(el => {
+						if(el.id === compareState.activeCards[0].id || el.id === compareState.activeCards[1].id){
+							el.isActive = false;
+						}
+					});
+				}
+				compareState.activeCards = [];
+			}
+
+			return compareState;
 			break;
 
 		case 'UPDATE_MESSAGE':
@@ -86,8 +119,15 @@ export const levelReducer = (state = levelDetails, action) => {
 			break;
 
 		case 'LEVEL_WIN':
-			console.log(action);
-			return state; //switch this to newState once ready
+			let endGameState = Object.assign({}, state);
+
+			endGameState.id++;
+
+			if(endGameState.id >= levels.length){
+				endGameState.id = 0;
+			}
+
+			return endGameState; 
 			break;
 
 		case 'LEVEL_LOSE':
@@ -119,71 +159,9 @@ export const levelReducer = (state = levelDetails, action) => {
 	}
 };
 
-const cardsReducer = (state = currentCards, action) => {
-	switch(action.type){
-		case 'GENERATE_CARDS':
-			let cards = [...Array(action.number).keys()],
-				pair = Counter.incrementString(),
-				colorIndex = 0,
-				shapeIndex = 0,
-				formattedCards = cards.map( (el, i) => {
-
-					if(i % 2 === 0 && i > 0){
-						pair = Counter.incrementString();
-						colorIndex++;
-					}
-
-					if(colorIndex === tileDetails.colors.length){
-						colorIndex = 0;
-						shapeIndex++;
-					}
-					return {
-						id: i,
-						pair,
-						colorIndex,
-						shapeIndex,
-						isActive: false
-					};
-				});
-			return Randomize(formattedCards);
-			break;
-
-		case 'REVEAL_CARD':
-			let reveal = state.map((el) => {
-				let temp = Object.assign({}, el);
-				if(temp.id === action.id){
-					temp.isActive = true;
-				}
-				return temp;
-			});
-
-			return reveal;
-			break;
-
-		case 'COMPARE_CARDS':
-			console.group("Compare Cards:");
-				console.log(state);
-				console.log(action);
-			console.groupEnd();
-			// let hide = state.map((el) => {
-			// 	let temp = Object.assign({}, el);
-			// 	if(temp.id === action.cards[0] || temp.id === action.cards[1]){
-			// 		temp.isActive = false;
-			// 	}
-			// 	return temp;
-			// });
-			// console.log(action);
-			return state;		
-		default:
-			return state;
-	}
-};
-
 export const allReducers = combineReducers({
 	powerupState: powerupsReducer,
-	compareState: compareReducer,
-	levelState: levelReducer,
-	currentCards: cardsReducer
+	levelState: levelReducer
 });
 
 // console.group("Cards:");
