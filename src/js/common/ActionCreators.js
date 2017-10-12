@@ -1,9 +1,12 @@
 import ActionTypes from "./ActionTypes";
 
-export const compare = (card) => ({
-	type: ActionTypes.compare,
-	card
-});
+export const compare = card => {
+	console.log('inside compare')
+	return {
+		type: ActionTypes.compare,
+		card
+	};
+};
 
 export const decreaseMoves = () => ({
 	type: ActionTypes.decreaseMoves
@@ -85,6 +88,16 @@ export const usePowerup = (powerup) => ({
 	type: ActionTypes.usePowerup,
 	powerup
 });
+
+export function compareAndFill(card){
+	console.log('active')
+	return function(dispatch, getState){
+		console.log('active x 2');
+		dispatch(compare(card));
+		let match = getState().compareState.match;
+		return dispatch(fillPowerbars(match));
+	};
+}
 
 export const win = () => ({
 	type: ActionTypes.win
