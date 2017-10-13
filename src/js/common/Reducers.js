@@ -4,21 +4,20 @@ import { levels, tileDetails } from './Loader';
 import Counter from '../lib/Counter';
 import Randomize from '../lib/Randomize';
 
-let { powerupDetails, levelDetails, cardsDetails } = AppState;
+let { powerupDetails, levelDetails } = AppState;
 
 export const powerupsReducer = (state = powerupDetails, action) => {
 	switch(action.type){
 		case 'FILL_POWER_BAR':
-			console.log('inside fill powerbar')
 			let newPowerBar = Object.assign({}, state);
-			if(action.match){
-				console.group("Fill Power Bar:");
-					console.log("match");
-					console.log(newPowerBar);
-				console.groupEnd();
+
+			for(let obj in newPowerBar){
+				if(newPowerBar[obj].target > newPowerBar[obj].current){
+					newPowerBar[obj].current += 1;
+				}
 			}
 
-			return state;
+			return newPowerBar;
 			break;
 
 		case 'USE_POWERUP':
@@ -35,6 +34,16 @@ export const powerupsReducer = (state = powerupDetails, action) => {
 					newState = Object.assign({}, state, cl);
 				return newState;
 			}
+			break;
+
+		case 'INCREASE_POWER_BAR':
+			let biggerPowerBar = Object.assign({}, state);
+
+			for(let obj in biggerPowerBar){
+				biggerPowerBar[obj].target = Math.floor(biggerPowerBar[obj].target * 1.25);
+			}
+
+			return biggerPowerBar;
 			break;
 
 		default:
@@ -67,7 +76,8 @@ const levelReducer = (state = levelDetails, action) => {
 						pair,
 						colorIndex,
 						shapeIndex,
-						isActive: false
+						isActive: false,
+						isLocked: false
 					};
 				});
 				newState.levelCards = Randomize(formattedCards);
@@ -78,8 +88,9 @@ const levelReducer = (state = levelDetails, action) => {
 		case 'COMPARE_CARDS':
 			let compareState = Object.assign({}, state);
 
-			console.log("compare cards: ", compareState);
-			console.log("action: ", action);
+			if(compareState.activeCards.length === 0 && compareState.match){
+				compareState.match = false;
+			}
 
 			compareState.activeCards.push(action.card);
 
@@ -94,28 +105,44 @@ const levelReducer = (state = levelDetails, action) => {
 			}
 			
 			
-			if(compareState.activeCards.length < 2){
+			if(compareState.activeCards.length < 2 && compareState.activeCards.length > 0){
 				return compareState;
 			}else if (compareState.activeCards.length === 2){
 				if(compareState.activeCards[0].pair === compareState.activeCards[1].pair){
 					compareState.match = true;
 					compareState.targetMatches--;
 					compareState.levelScore += 100;
+					compareState.activeCards = [];
+					compareState.levelMessage = "It's a Match!";
 				}else{
 					compareState.levelCards.forEach(el => {
-						if(el.id === compareState.activeCards[0].id || el.id === compareState.activeCards[1].id){
-							el.isActive = false;
-						}
+						el.isLocked = true;
 					});
 				}
-				compareState.activeCards = [];
 			}
 
 			return compareState;
 			break;
 
+		case 'HIDE_CARDS':
+			let hideState = Object.assign({}, state);
+
+			hideState.levelMessage = "It's not a match :(";
+
+			hideState.levelCards.forEach(el => {
+				el.isLocked = false;
+				if(el.id === hideState.activeCards[0].id || el.id === hideState.activeCards[1].id){
+					el.isActive = false;
+				}
+			});
+
+			hideState.activeCards = [];
+
+			return hideState;
+			break;
+
 		case 'UPDATE_MESSAGE':
-			console.log(action);
+			
 			return state; //switch this to newState once ready 
 			break;
 
@@ -123,6 +150,8 @@ const levelReducer = (state = levelDetails, action) => {
 			let endGameState = Object.assign({}, state);
 
 			endGameState.id++;
+
+			endGameState.levelMessage = "Success!";
 
 			if(endGameState.id >= levels.length){
 				endGameState.id = 0;

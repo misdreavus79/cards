@@ -1,7 +1,7 @@
 import React from "react";
 import '../../scss/Tile.scss';
 
-const Tile = ({shape, color, matcher, onClick, isActive, id}) => (
+const Tile = ({shape, color, matcher, onClick, isActive, id, isPaired}) => (
 	<img 
 		src={
 			isActive ?
@@ -11,6 +11,7 @@ const Tile = ({shape, color, matcher, onClick, isActive, id}) => (
 		onClick={onClick}
 		data-active={isActive}
 		data-matcher={matcher}
+		data-paired={isPaired}
 		className="tile"
 		id={id}
 	/>

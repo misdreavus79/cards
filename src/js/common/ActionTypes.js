@@ -7,6 +7,7 @@ const ActionTypes = {
 	fillPowerbars: 'FILL_POWER_BAR',
 	hide: 'HIDE_CARDS',
 	increaseScore: 'INCREASE_SCORE',
+	increaseBar: 'INCREASE_POWER_BAR',
 	lose: 'LEVEL_LOSE',
 	nextLevel: 'NEXT_LEVEL',
 	prevLevel: 'PREV_LEVEL',

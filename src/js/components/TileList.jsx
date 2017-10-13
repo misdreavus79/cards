@@ -1,10 +1,11 @@
 //app
 import React, { Component } from "react";
 import Tile from "./Tile";
+import Title from './Title';
 import '../../scss/Board.scss';
 
 //state
-import { compare, revealCard, hideCards, fillPowerbars } from '../common/ActionCreators';
+import { levelController } from '../common/ActionCreators';
 import { tileDetails } from '../common/Loader';
 
 class TileList extends Component {
@@ -27,9 +28,9 @@ class TileList extends Component {
 						shape={tileDetails.shapes[el.shapeIndex]}
 						color={tileDetails.colors[el.colorIndex]}
 						onClick={() => 
-							el.isActive ?
+							(el.isActive || el.isLocked) ?
 							'' :
-							store.dispatch(compare(el))
+							store.dispatch(levelController(el))
 						}
 						isActive={el.isActive}
 					/>
@@ -44,6 +45,8 @@ class TileList extends Component {
 			<div 
 				id="board" 
 				className="group">
+				<Title 
+					message={state.levelState.levelMessage} />
 				{cards}
 			</div>
 		)

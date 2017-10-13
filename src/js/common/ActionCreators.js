@@ -1,7 +1,6 @@
 import ActionTypes from "./ActionTypes";
 
 export const compare = card => {
-	console.log('inside compare')
 	return {
 		type: ActionTypes.compare,
 		card
@@ -26,14 +25,21 @@ export const end = (status) => ({
 	status: status
 });
 
-export const fillPowerbars = (match) => ({
-	type: ActionTypes.fillPowerbars,
-	match
+export const fillPowerbars = () => ({
+	type: ActionTypes.fillPowerbars
+});
+
+export const hideCards = () => ({
+	type: ActionTypes.hide
 });
 
 export const increaseScore = (newScore) => ({
 	type: ActionTypes.increaseScore,
 	newScore
+});
+
+export const increasebars = () => ({
+	type: ActionTypes.increaseBar
 });
 
 export const lose = () => ({
@@ -79,14 +85,47 @@ export const usePowerup = (powerup) => ({
 	powerup
 });
 
-export function hideIfNeeded(card){
-	return function(dispatch, getState){
-		dispatch(compare(card));
-		let match = getState().levelState.match;
-		// return dispatch(fillPowerbars(match));
-	};
-}
-
 export const win = () => ({
 	type: ActionTypes.win
 });
+
+//Thunk actions
+
+export function levelController(card){
+	return function(dispatch, getState){
+		dispatch(compare(card));
+
+		let state = getState().levelState,
+			match = state.match,
+			activeCards = state.activeCards.length,
+			remainingMatches = state.targetMatches,
+			level = state.id;
+
+		console.group("Level Controller:");
+			console.log("State", state);
+			console.log("It's a match?", match);
+			console.log("Active Cards", activeCards);
+			console.log("remaining matches", remainingMatches);
+			console.log("level", level);
+		console.groupEnd();
+
+		if(!match && activeCards === 2){
+			return setTimeout(function(){
+				dispatch(hideCards());
+			}, 500); 
+		}
+
+		if(match){
+			if(remainingMatches === 0){
+				if(level % 10 === 0){
+					dispatch(increasebars());
+				}
+				dispatch(fillPowerbars());
+				return dispatch(win());
+			}
+			return dispatch(fillPowerbars());
+		}
+
+		
+	};
+}

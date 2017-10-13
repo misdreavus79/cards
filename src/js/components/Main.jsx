@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import '../../scss/Main.scss';
-import Title from "./Title";
 import TileList from "./TileList";
 import Play from "./Play";
 import Shuffle from "./Shuffle";
@@ -8,11 +7,10 @@ import { play } from '../common/ActionCreators';
 
 const Main = ({ store }) => (
 	<main className="main" role="main">
-		<Title message={store.getState().levelState.levelMessage} />
-		<TileList store={store} />	
+		<TileList 
+			store={store} />	
 		<Play 
-			onClick={() => store.dispatch(play())}
-			text="Play" />
+			onClick={() => store.dispatch(play())} />
 		<Shuffle />
 	</main>
 )
