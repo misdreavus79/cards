@@ -100,6 +100,7 @@ const levelReducer = (state = levelDetails, action) => {
 				if(compareState.activeCards[0].pair === compareState.activeCards[1].pair){
 					compareState.match = true;
 					compareState.targetMatches--;
+					compareState.levelScore += 100;
 				}else{
 					compareState.levelCards.forEach(el => {
 						if(el.id === compareState.activeCards[0].id || el.id === compareState.activeCards[1].id){

@@ -20,31 +20,19 @@ class Details extends Component{
 		this.unsubscribe();
 	}
 
-	updateScore(){
-		this.setState({
-			score: this.state.score + 100
-		});
-	}
-	countdown(){
-		this.setState({
-			seconds: this.state.seconds - 1
-		});
-	}
-	moves(){
-		this.setState({
-			moves: this.state.moves - 1
-		});
-	}
-
 	render(){
+		const { store } = this.props;
+		let seconds = store.getState().levelState.targetSeconds || "∞",
+			moves = store.getState().levelState.targetMoves || "∞",
+			score = store.getState().levelState.levelScore;
 		return(
        		<aside className="details">
        			<h2>Score</h2>
-       			<Score score={this.state.score} />
+       			<Score score={score} />
        			<h2>Time</h2>
-				<Time seconds={this.state.seconds} />
+				<Time seconds={seconds} />
 				<h2>Moves</h2>
-				<Moves moves={this.state.moves} />
+				<Moves moves={moves} />
 			</aside>
 		)
 	}

@@ -30,7 +30,8 @@ const AppState = {
 		targetMatches: 2,
 		levelCards: [],
 		activeCards: [],
-		match: false
+		match: false,
+		levelScore: 0
 	}
 };
 

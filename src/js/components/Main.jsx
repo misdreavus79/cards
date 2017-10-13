@@ -5,7 +5,6 @@ import TileList from "./TileList";
 import Play from "./Play";
 import Shuffle from "./Shuffle";
 import { play } from '../common/ActionCreators';
-import {batchActions} from "redux-batched-actions";
 
 const Main = ({ store }) => (
 	<main className="main" role="main">

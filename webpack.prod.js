@@ -9,7 +9,7 @@ module.exports = {
 
 	entry: { 
 		app: './src/js/cards.js', 
-		vendor: ['react', 'react-dom', 'redux', 'react-redux', 'redux-thunk', 'redux-batched-actions', 'immutable'] 
+		vendor: ['react', 'react-dom', 'redux', 'react-redux', 'redux-thunk', 'immutable'] 
 	},
 
 	output: {
