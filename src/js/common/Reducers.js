@@ -81,6 +81,7 @@ const levelReducer = (state = levelDetails, action) => {
 					};
 				});
 				newState.levelCards = Randomize(formattedCards);
+				newState.active = true;
 
 			return newState;
 			break;
@@ -152,6 +153,7 @@ const levelReducer = (state = levelDetails, action) => {
 			endGameState.id++;
 
 			endGameState.levelMessage = "Success!";
+			endGameState.active = false;
 
 			if(endGameState.id >= levels.length){
 				endGameState.id = 0;

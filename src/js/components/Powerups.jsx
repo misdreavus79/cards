@@ -4,51 +4,39 @@ import Wildcard from "./Wildcard";
 import MiracleEye from "./MiracleEye";
 import CandyBar from "./CandyBar";
 
-import { usePowerup, fillPowerbars } from '../common/ActionCreators';
 
-class Powerups extends Component{
-	componentDidMount(){
-		const { store } = this.props;
-		this.unsubscribe = store.subscribe(() => this.forceUpdate());
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
-	render(){
-		const { store } = this.props,
-			  state = store.getState(),
-			  { powerupState, levelState } = state;
+
+const Powerups = ({ type, runningMan, wildcard, miracleEye, candyBar, useRunningMan, useWildcard, useMiracleEye, useCandyBar }) => {
 
 		return(
 			<aside className="powerups">
 				<h2>Powerups</h2>
 				<RunningMan 
-					value={powerupState.runningMan.current}
-					max={powerupState.runningMan.target}
-					onClick={() => store.dispatch(usePowerup('runningMan'))} 
-					full={powerupState.runningMan.full} />
+					value={runningMan.current}
+					max={runningMan.target}
+					onClick={useRunningMan} 
+					full={runningMan.full} />
 
 				<Wildcard 
-					value={powerupState.wildcard.current}
-					max={powerupState.wildcard.target}
-					onClick={() => store.dispatch(usePowerup('wildcard'))} 
-					full={powerupState.wildcard.full} />
+					value={wildcard.current}
+					max={wildcard.target}
+					onClick={useWildcard} 
+					full={wildcard.full} />
 
 				<MiracleEye 
-					value={powerupState.miracleEye.current}
-					max={powerupState.miracleEye.target}
-					onClick={() => store.dispatch(usePowerup('miracleEye'))} 
-					full={powerupState.miracleEye.full} />
+					value={miracleEye.current}
+					max={miracleEye.target}
+					onClick={useMiracleEye} 
+					full={miracleEye.full} />
 				
 				<CandyBar 
-					value={powerupState.candyBar.current}
-					max={powerupState.candyBar.target}
-					onClick={() => store.dispatch(usePowerup('candyBar'))} 
-					full={powerupState.candyBar.full} 
-					type={levelState.type} />
+					value={candyBar.current}
+					max={candyBar.target}
+					onClick={useCandyBar} 
+					full={candyBar.full} 
+					type={type} />
 			</aside>
 		);
-	}
 }
 
 export default Powerups;			
