@@ -1,5 +1,8 @@
 import ActionTypes from "./ActionTypes";
 
+let timer = null; // has to be global so other actions can access it :(
+
+
 export const compare = card => {
 	return {
 		type: ActionTypes.compare,
@@ -16,10 +19,6 @@ export const decreaseScore = (newScore) => ({
 	score: newScore
 });
 
-export const decreaseSeconds = () => ({
-	type: ActionTypes.decreaseSeconds
-});
-
 export const end = (status) => ({
 	type: ActionTypes.end,
 	status: status
@@ -33,9 +32,8 @@ export const hideCards = () => ({
 	type: ActionTypes.hide
 });
 
-export const increaseScore = (newScore) => ({
+export const increaseScore = () => ({
 	type: ActionTypes.increaseScore,
-	newScore
 });
 
 export const increasebars = () => ({
@@ -101,14 +99,6 @@ export function levelController(card){
 			remainingMatches = state.targetMatches,
 			level = state.id;
 
-		console.group("Level Controller:");
-			console.log("State", state);
-			console.log("It's a match?", match);
-			console.log("Active Cards", activeCards);
-			console.log("remaining matches", remainingMatches);
-			console.log("level", level);
-		console.groupEnd();
-
 		if(!match && activeCards === 2){
 			return setTimeout(function(){
 				dispatch(hideCards());
@@ -125,7 +115,23 @@ export function levelController(card){
 			}
 			return dispatch(fillPowerbars());
 		}
-
-		
 	};
 }
+
+export function timedIfSeconds(){
+	return function(dispatch, getState){
+		dispatch(play());
+
+		if(getState().levelState.type === "time"){
+			timer = setInterval(() => dispatch(decreaseSeconds()), 1000);
+		}
+	}
+}
+
+export const stopTimer = () => {
+	clearInterval(timer);
+};
+
+export const decreaseSeconds = () => {
+	return dispatch({ type: ActionTypes.decreaseSeconds });
+};

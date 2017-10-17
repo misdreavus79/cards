@@ -5,7 +5,7 @@ import Powerups from "./Powerups";
 import Tile from './Tile';
 
 //state
-import { levelController, play, usePowerup } from '../common/ActionCreators';
+import { levelController, timedIfSeconds, usePowerup } from '../common/ActionCreators';
 import { tileDetails } from '../common/Loader';
 
 class Game extends Component {
@@ -52,7 +52,7 @@ class Game extends Component {
 				<Main 
 					cards={cards}
 					message={message}
-					play={() => store.dispatch(play())}
+					play={() => store.dispatch(timedIfSeconds())}
 					active={active} />
 				<Powerups 
 					runningMan={powerups.runningMan}

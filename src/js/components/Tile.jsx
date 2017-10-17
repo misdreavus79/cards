@@ -11,7 +11,6 @@ const Tile = ({shape, color, matcher, onClick, isActive, id, isPaired}) => (
 		onClick={onClick}
 		data-active={isActive}
 		data-matcher={matcher}
-		data-paired={isPaired}
 		className="tile"
 		id={id}
 	/>

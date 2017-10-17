@@ -172,8 +172,9 @@ const levelReducer = (state = levelDetails, action) => {
 			break;
 
 		case 'DECREASE_SECONDS':
-			console.log(action);
-			return state; //switch this to newState once ready
+			let secondsState = Object.assign({}, state);
+				secondsState.targetSeconds--;
+			return secondsState;
 			break;
 
 		case 'DECREASE_MOVES':
