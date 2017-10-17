@@ -148,22 +148,32 @@ const levelReducer = (state = levelDetails, action) => {
 			break;
 
 		case 'LEVEL_WIN':
-			let endGameState = Object.assign({}, state);
+			let winGameState = Object.assign({}, state);
 
-			endGameState.id++;
+			winGameState.id++;
 
-			endGameState.levelMessage = "Success!";
-			endGameState.active = false;
+			winGameState.levelMessage = "Success!";
+			winGameState.active = false;
 
-			if(endGameState.id >= levels.length){
-				endGameState.id = 0;
+			if(winGameState.id >= levels.length){
+				winGameState.id = 0;
 			}
 
-			return endGameState; 
+			return winGameState; 
 			break;
 
 		case 'LEVEL_LOSE':
-			return state; //switch this to newState once ready
+			let loseState = Object.assign({}, state);
+
+			if(loseState.type === "time"){
+				loseState.levelMessage = "Out of time :("
+			}else if(loseState.type === "moves"){
+				loseState.levelMessage = "Out of moves :(";
+			}
+
+			loseState.active = false;
+
+			return loseState; //switch this to newState once ready
 			break;
 
 		case 'INCREASE_SCORE':

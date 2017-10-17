@@ -99,6 +99,12 @@ export function levelController(card){
 			remainingMatches = state.targetMatches,
 			level = state.id;
 
+		if(state.type === "moves"){
+			if(state.targetMoves <= 0 && remainingMatches > 0){
+				return dispatch(lose());
+			}
+		}
+		
 		if(!match && activeCards === 2){
 			return setTimeout(function(){
 				dispatch(hideCards());
@@ -133,5 +139,14 @@ export const stopTimer = () => {
 };
 
 export const decreaseSeconds = () => {
-	return dispatch({ type: ActionTypes.decreaseSeconds });
+	return function(dispatch, getState){
+		let levelState = getState().levelState;
+		if(levelState.targetSeconds <= 0){ //it takes a tick to clear the timer
+			if(levelState.targetMatches > 0){
+				dispatch(lose());
+			}
+			return dispatch(stopTimer());
+		}
+		return dispatch({ type: ActionTypes.decreaseSeconds });
+	}
 };
