@@ -1,4 +1,5 @@
 const ActionTypes = {
+	applyPowerup: 'APPLY_POWERUP',
 	compare: 'COMPARE_CARDS',
 	decreaseMoves: 'DECREASE_MOVES',
 	decreaseScore: 'DECREASE_SCORE',
@@ -16,7 +17,8 @@ const ActionTypes = {
 	resetSeconds: 'RESET_SECONDS',
 	respawn: 'RESPAWN_TILES',
 	reveal_card: 'REVEAL_CARD',
-	shuffle: 'SHUFFLE_BOARD',
+	shuffleStart: 'SHUFFLE_START',
+	shuffleEnd: 'SHUFFLE_END',
 	play: 'PLAY_LEVEL',
 	updateMessage: 'UPDATE_MESSAGE',
 	usePowerup: 'USE_POWERUP',

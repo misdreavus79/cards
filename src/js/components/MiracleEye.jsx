@@ -1,6 +1,6 @@
 import React from "react";
 
-const MiracleEye = ({value, max, onClick}) => 
+const MiracleEye = ({value, max, onClick, full}) => 
 
 	<label htmlFor="showBoard">Miracle Eye
 		<progress 

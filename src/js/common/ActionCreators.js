@@ -64,10 +64,6 @@ export const revealCard = (id) => ({
 	type: ActionTypes.reveal_card,
 	id
 });
-
-export const shuffle = () => ({
-	type: ActionTypes.shuffle
-});
 	
 export const play = () => ({
 	type: ActionTypes.play
@@ -104,7 +100,7 @@ export function levelController(card){
 				return dispatch(lose());
 			}
 		}
-		
+
 		if(!match && activeCards === 2){
 			return setTimeout(function(){
 				dispatch(hideCards());
@@ -148,5 +144,13 @@ export const decreaseSeconds = () => {
 			return dispatch(stopTimer());
 		}
 		return dispatch({ type: ActionTypes.decreaseSeconds });
+	}
+};
+
+export const shuffle = () => {
+	return (dispatch) => {
+		dispatch({ type: ActionTypes.shuffleStart });
+
+		return dispatch({ type: ActionTypes.shuffleEnd });
 	}
 };

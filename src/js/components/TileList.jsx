@@ -4,18 +4,14 @@ import Tile from "./Tile";
 import Title from './Title';
 import '../../scss/Board.scss';
 
-const TileList = ({ cards, message }) => {
-			
-			
-		return(
-			<div 
-				id="board" 
-				className="group">
-				<Title 
-					message={message} />
-				{cards}
-			</div>
-		)
-}
+const TileList = ({ cards, message }) => ( //consider props.children here
+	<section 
+		id="board" 
+		className="{}">
+		<Title 
+			message={message} />
+		{cards}
+	</section>
+);
 
 export default TileList;

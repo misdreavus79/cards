@@ -4,21 +4,25 @@ const AppState = {
 		runningMan: {
 			current: 0,
 			target: 50,
+			full: false
 		},
 
 		wildcard: {
 			current: 0,
 			target: 30,
+			full: false
 		},
 
 		miracleEye: {
 			current: 0,
 			target: 40,
+			full: false
 		},
 
 		candyBar: {
 			current: 0,
 			target: 20,
+			full: false
 		}
 	},
 

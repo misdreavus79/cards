@@ -5,7 +5,7 @@ import Play from "./Play";
 import Shuffle from "./Shuffle";
 
 
-const Main = ({ active, cards, message, play }) => (
+const Main = ({ active, cards, message, play, shuffle }) => (
 	<main className="main" role="main">
 		<TileList 
 			cards={cards}
@@ -14,7 +14,7 @@ const Main = ({ active, cards, message, play }) => (
 			<Play 
 				onClick={play} /> : "" }
 		{ active ? 
-			<Shuffle /> : "" } 
+			<Shuffle onClick={shuffle} /> : "" } 
 	</main>
 )
 

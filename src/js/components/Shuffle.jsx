@@ -1,9 +1,9 @@
 import React from "react";
 
-const Shuffle = ({shuffle}) => (
+const Shuffle = ({onClick}) => (
 	<button 
 		id="shuffle" 
-		onClick={shuffle}>
+		onClick={onClick}>
 		Shuffle
 	</button>
 );

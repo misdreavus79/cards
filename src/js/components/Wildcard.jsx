@@ -1,6 +1,6 @@
 import React from "react";
 
-const Wildcard = ({value, max, onClick}) => 
+const Wildcard = ({value, max, onClick, full}) => 
 
 	<label htmlFor="wildcard">Wildcard
 		<progress 

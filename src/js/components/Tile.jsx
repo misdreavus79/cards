@@ -1,7 +1,7 @@
 import React from "react";
 import '../../scss/Tile.scss';
 
-const Tile = ({shape, color, matcher, onClick, isActive, id, isPaired}) => (
+const Tile = ({shape, color, onClick, isActive, id}) => (
 	<img 
 		src={
 			isActive ?
@@ -9,8 +9,6 @@ const Tile = ({shape, color, matcher, onClick, isActive, id, isPaired}) => (
 			`//storage.googleapis.com/sca/cards/shapes/blank.png`
 		} 
 		onClick={onClick}
-		data-active={isActive}
-		data-matcher={matcher}
 		className="tile"
 		id={id}
 	/>

@@ -7,8 +7,7 @@ const RunningMan = ({value, max, onClick, full}) =>
 			value={value}
 			max={max}
 			onClick={onClick}
-			id="clearLevel"
-			data-full={full}>
+			id="clearLevel">
 			Progress: 
 		</progress>
 	</label>

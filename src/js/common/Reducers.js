@@ -21,19 +21,16 @@ export const powerupsReducer = (state = powerupDetails, action) => {
 			break;
 
 		case 'USE_POWERUP':
-			if(!state[action.powerup].full){
-				return state;
-			}else{
-				let cl = {
-						[powerup]:	{
-							current: 0,
-							target: state[action.powerup].target,
-							full: false
-						}
-					},
-					newState = Object.assign({}, state, cl);
-				return newState;
-			}
+			console.log('powerup');
+			let cl = {
+					[action.powerup]:	{
+						current: 0,
+						target: state[action.powerup].target,
+						full: false
+					}
+				},
+				newState = Object.assign({}, state, cl);
+			return newState;
 			break;
 
 		case 'INCREASE_POWER_BAR':
@@ -82,6 +79,10 @@ const levelReducer = (state = levelDetails, action) => {
 				});
 				newState.levelCards = Randomize(formattedCards);
 				newState.active = true;
+
+				if(newState.levelScore > 0){
+					newState.levelScore = 0;
+				}
 
 			return newState;
 			break;
@@ -142,24 +143,48 @@ const levelReducer = (state = levelDetails, action) => {
 			return hideState;
 			break;
 
+		case 'SHUFFLE_START':
+			let shuffleStart = Object.assign({}, state);
+
+			shuffleStart.levelCards = Randomize(shuffleStart.levelCards);
+
+			return shuffleStart;
+			break;
+
+		case 'SHUFFLE_END':
+			let shuffleEnd = Object.assign({}, state);
+
+			return shuffleEnd;
+			break;	
+
 		case 'UPDATE_MESSAGE':
 			
 			return state; //switch this to newState once ready 
 			break;
 
 		case 'LEVEL_WIN':
-			let winGameState = Object.assign({}, state);
+			let winState = Object.assign({}, state);
 
-			winGameState.id++;
+			winState.id++;
 
-			winGameState.levelMessage = "Success!";
-			winGameState.active = false;
+			winState.levelMessage = "Success!";
+			winState.active = false;
+			winState.activeCards = [];
+			winState.match = false;
 
-			if(winGameState.id >= levels.length){
-				winGameState.id = 0;
+			if(winState.type === "time"){
+				winState.levelScore = winState.levelScore + winState.targetSeconds * 10;
+				winState.targetSeconds = "∞";
+			}else if(winState.type === "moves"){
+				winState.levelScore = winState.levelScore + winState.targetMoves * 10;
+				winState.targetMoves = "∞";
 			}
 
-			return winGameState; 
+			if(winState.id >= levels.length){
+				winState.id = 0;
+			}
+
+			return winState; 
 			break;
 
 		case 'LEVEL_LOSE':
@@ -171,7 +196,12 @@ const levelReducer = (state = levelDetails, action) => {
 				loseState.levelMessage = "Out of moves :(";
 			}
 
+			//reset level controller properties
 			loseState.active = false;
+			loseState.activeCards = [];
+			loseState.match = false;
+
+			console.log(loseState);
 
 			return loseState; //switch this to newState once ready
 			break;
@@ -192,9 +222,10 @@ const levelReducer = (state = levelDetails, action) => {
 			return state; //switch this to newState once ready
 			break;
 
-		case 'SHUFFLE':
-			console.log(action);
-			return state; //switch this to newState once ready
+		case 'USE_POWERUP':
+			let usedPowerupState = Object.assign({}, state);
+
+			return usedPowerupState;
 			break;
 
 		default:

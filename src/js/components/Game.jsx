@@ -5,7 +5,7 @@ import Powerups from "./Powerups";
 import Tile from './Tile';
 
 //state
-import { levelController, timedIfSeconds, usePowerup } from '../common/ActionCreators';
+import { levelController, timedIfSeconds, usePowerup, shuffle } from '../common/ActionCreators';
 import { tileDetails } from '../common/Loader';
 
 class Game extends Component {
@@ -31,7 +31,6 @@ class Game extends Component {
 					<Tile 
 						key={i}
 						id={el.id}
-						matcher={el.pair} 
 						shape={tileDetails.shapes[el.shapeIndex]}
 						color={tileDetails.colors[el.colorIndex]}
 						onClick={() => 
@@ -50,10 +49,11 @@ class Game extends Component {
 					moves={moves}
 					score={score}  />
 				<Main 
+					active={active}
 					cards={cards}
 					message={message}
 					play={() => store.dispatch(timedIfSeconds())}
-					active={active} />
+					shuffle={() => store.dispatch(shuffle())} />
 				<Powerups 
 					runningMan={powerups.runningMan}
 					wildcard={powerups.wildcard}
