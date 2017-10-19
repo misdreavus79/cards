@@ -3,12 +3,10 @@ import ActionTypes from "./ActionTypes";
 let timer = null; // has to be global so other actions can access it :(
 
 
-export const compare = card => {
-	return {
-		type: ActionTypes.compare,
-		card
-	};
-};
+export const compare = card => ({
+	type: ActionTypes.compare,
+	card
+});
 
 export const decreaseMoves = () => ({
 	type: ActionTypes.decreaseMoves
@@ -74,9 +72,17 @@ export const updateMessage = (message) => ({
 	message
 });
 
-export const usePowerup = (powerup) => ({
-	type: ActionTypes.usePowerup,
-	powerup
+export const useWildcard = () => ({
+	type: ActionTypes.useWildcard
+});
+
+export const useMiracleEye = () => ({
+	type: ActionTypes.useMiracleEye
+});
+
+export const useCandyBar = (kind) => ({
+	type: ActionTypes.useCandyBar,
+	kind
 });
 
 export const win = () => ({
@@ -84,6 +90,19 @@ export const win = () => ({
 });
 
 //Thunk actions
+
+export const decreaseSeconds = () => {
+	return function(dispatch, getState){
+		let levelState = getState().levelState;
+		if(levelState.targetSeconds <= 0){ //it takes a tick to clear the timer
+			if(levelState.targetMatches > 0){
+				dispatch(lose());
+			}
+			return dispatch(stopTimer());
+		}
+		return dispatch({ type: ActionTypes.decreaseSeconds });
+	}
+};
 
 export function levelController(card){
 	return function(dispatch, getState){
@@ -118,33 +137,6 @@ export function levelController(card){
 			return dispatch(fillPowerbars());
 		}
 	};
-}
-
-export function timedIfSeconds(){
-	return function(dispatch, getState){
-		dispatch(play());
-
-		if(getState().levelState.type === "time"){
-			timer = setInterval(() => dispatch(decreaseSeconds()), 1000);
-		}
-	}
-}
-
-export const stopTimer = () => {
-	clearInterval(timer);
-};
-
-export const decreaseSeconds = () => {
-	return function(dispatch, getState){
-		let levelState = getState().levelState;
-		if(levelState.targetSeconds <= 0){ //it takes a tick to clear the timer
-			if(levelState.targetMatches > 0){
-				dispatch(lose());
-			}
-			return dispatch(stopTimer());
-		}
-		return dispatch({ type: ActionTypes.decreaseSeconds });
-	}
 };
 
 export const shuffle = () => {
@@ -154,3 +146,22 @@ export const shuffle = () => {
 		return dispatch({ type: ActionTypes.shuffleEnd });
 	}
 };
+
+export const stopTimer = () => {
+	clearInterval(timer);
+};
+
+export function timedIfSeconds(){
+	return function(dispatch, getState){
+		dispatch(play());
+
+		if(getState().levelState.type === "time"){
+			timer = setInterval(() => dispatch(decreaseSeconds()), 1000);
+		}
+	}
+};
+
+export const usePowerup = (powerup) => ({
+	type: ActionTypes.usePowerup,
+	powerup
+});

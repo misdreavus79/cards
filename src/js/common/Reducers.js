@@ -144,6 +144,7 @@ const levelReducer = (state = levelDetails, action) => {
 			break;
 
 		case 'SHUFFLE_START':
+			
 			let shuffleStart = Object.assign({}, state);
 
 			shuffleStart.levelCards = Randomize(shuffleStart.levelCards);
