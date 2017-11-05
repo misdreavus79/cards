@@ -1,6 +1,6 @@
 .tile{
 	transition: all .2s linear;
-	// backface-visibility: hidden;
+	backface-visibility: hidden;
 	margin-right: 18px;
 	border-radius: 5px;
 	&[data-active="false"]{
