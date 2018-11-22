@@ -138,7 +138,6 @@ export function levelController(card){
 		}
 	};
 };
-
 export const shuffle = () => {
 	return (dispatch) => {
 		dispatch({ type: ActionTypes.shuffleStart });

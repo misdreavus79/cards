@@ -11,6 +11,7 @@ const Tile = ({shape, color, onClick, isActive, id}) => (
 		onClick={onClick}
 		className="tile"
 		id={id}
+		data-active={isActive}
 	/>
 )
 export default Tile;
